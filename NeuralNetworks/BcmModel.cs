@@ -10,7 +10,7 @@ namespace NeuralNetworks
 
         public void Train(int[] vector)
         {
-            ValidateVector(vector);
+            VerifyVectorBeforeTraining(vector);
             
             for (int i = 0; i < vector.Length; i++)
             {
@@ -26,7 +26,14 @@ namespace NeuralNetworks
             _vectorCount++;
         }
 
-        private void ValidateVector(IReadOnlyCollection<int> vector)
+        public bool Test(int[] vector, int threshold)
+        {
+            int[] resultVector = NeuralNetworksMath.MultiplyVectorByMatrix(vector, CorrelationMatrix);
+            resultVector = DivideVectorByThreshold(resultVector, threshold);
+            return VerifyVectors(vector, resultVector);
+        }
+
+        private void VerifyVectorBeforeTraining(IReadOnlyCollection<int> vector)
         {
             switch (_vectorCount)
             {
@@ -40,7 +47,7 @@ namespace NeuralNetworks
                     if (vector.Count != CorrelationMatrix.GetLength(0))
                     {
                         throw new ArgumentException(
-                            "The length of the vector is different than the dimension of the matrix. The correct length: " +
+                            "The length of the vector is different than the dimension of the matrix. The correct vector length: " +
                             CorrelationMatrix.GetLength(0));
                     }
                     break;
@@ -50,6 +57,34 @@ namespace NeuralNetworks
                     throw new InvalidOperationException("You can train only two vectors for one BCM!");
                 }
             }
+        }
+
+        private int[] DivideVectorByThreshold(int[] vector, int threshold)
+        {
+            for (int i = 0; i < vector.Length; i++)
+            {
+                vector[i] /= threshold;
+            }
+
+            return vector;
+        }
+
+        private bool VerifyVectors(int[] questionVector, int[] resultVector)
+        {
+            if (questionVector.Length != resultVector.Length)
+            {
+                throw new ArgumentException("Vectors must have same length.");
+            }
+
+            for (int i = 0; i < questionVector.Length; i++)
+            {
+                if (questionVector[i] != resultVector[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
