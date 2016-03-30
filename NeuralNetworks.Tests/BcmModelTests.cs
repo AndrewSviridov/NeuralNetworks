@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MathNet.Numerics.LinearAlgebra;
+using System;
 using Xunit;
 
 namespace NeuralNetworks.Tests
@@ -6,8 +7,8 @@ namespace NeuralNetworks.Tests
     public class BcmModelTests
     {
         private const int _size = 6;
-        private readonly int[] _firstVector = { 1, 1, 0, 0, 0, 0 };
-        private readonly int[] _secondVector = { 0, 1, 0, 0, 0, 1 };
+        private readonly Vector<float> _firstVector = Vector<float>.Build.DenseOfArray(new[] {1f, 1, 0, 0, 0, 0});
+        private readonly Vector<float> _secondVector = Vector<float>.Build.DenseOfArray(new[] {0f, 1, 0, 0, 0, 1});
 
         [Fact]
         public void FirstTrainedVectorShouldGiveMatrixSize()
@@ -16,39 +17,34 @@ namespace NeuralNetworks.Tests
 
             bcmModel.Train(_firstVector);
 
-            Assert.Equal(6, bcmModel.CorrelationMatrix.GetLength(0));
+            Assert.Equal(6, bcmModel.CorrelationMatrix.ColumnCount);
         }
 
         [Fact]
         public void SecondTrainedVectorShouldGiveRightMatrix()
         {
-            var rightMatrix = new int[_size][];
             var bcmModel = new BcmModel();
+            var rightMatrix = Matrix<float>.Build.DenseOfArray(new[,]
+            {
+                {1f, 1, 0, 0, 0, 0},
+                {1, 1, 0, 0, 0, 1},
+                {0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0},
+                {0, 1, 0, 0, 0, 1}
+            });
 
             bcmModel.Train(_firstVector);
             bcmModel.Train(_secondVector);
 
-            rightMatrix[0] = new[] {1, 1, 0, 0, 0, 0};
-            rightMatrix[1] = new[] {1, 1, 0, 0, 0, 1};
-            rightMatrix[2] = new[] {0, 0, 0, 0, 0, 0};
-            rightMatrix[3] = new[] {0, 0, 0, 0, 0, 0};
-            rightMatrix[4] = new[] {0, 0, 0, 0, 0, 0};
-            rightMatrix[5] = new[] {0, 1, 0, 0, 0, 1};
-
-            for (int i = 0; i < _size; i++)
-            {
-                for (int j = 0; j < _size; j++)
-                {
-                    Assert.Equal(rightMatrix[i][j], bcmModel.CorrelationMatrix[i,j]);
-                }
-            }
+            Assert.Equal(rightMatrix, bcmModel.CorrelationMatrix);
         }
 
         [Fact]
         public void SecondTrainedVectorWithOtherLengthShouldThrowException()
         {
             var bcmModel = new BcmModel();
-            var vectorWithOtherLength = new int[8];
+            var vectorWithOtherLength = Vector<float>.Build.Dense(8);
 
             bcmModel.Train(_firstVector);
 
@@ -59,12 +55,21 @@ namespace NeuralNetworks.Tests
         public void TrainShouldThrowExceptionIfMatrixAlreadyKnowsTwoVectors()
         {
             var bcmModel = new BcmModel();
-            var thirdVector = new int[6];
+            var thirdVector = Vector<float>.Build.Dense(6);
 
             bcmModel.Train(_firstVector);
             bcmModel.Train(_secondVector);
 
             Assert.Throws<InvalidOperationException>(() => bcmModel.Train(thirdVector));
+        }
+
+        [Fact]
+        public void TrainShouldThrowExceptionIfVectorValuesAreNotEqualZeroOrOne()
+        {
+            var bcmModel = new BcmModel();
+            Vector<float> vectorWithBadValues = Vector<float>.Build.DenseOfArray(new[] { 1f, 1, 4, 0, 0, 0 });
+
+            Assert.Throws<ArgumentException>(() => bcmModel.Train(vectorWithBadValues));
         }
 
         [Fact]
@@ -96,7 +101,7 @@ namespace NeuralNetworks.Tests
         {
             var bcmModel = new BcmModel();
             var threshold = 2;
-            var unknownVector = new[] {1, 1, 1, 0, 0, 0};
+            var unknownVector = Vector<float>.Build.DenseOfArray(new[] { 1f, 1, 1, 1, 0, 0 });
 
             bcmModel.Train(_firstVector);
             bcmModel.Train(_secondVector);
@@ -109,7 +114,7 @@ namespace NeuralNetworks.Tests
         {
             var bcmModel = new BcmModel();
             var threshold = 2;
-            var vectorWithOtherLength = new int[7];
+            var vectorWithOtherLength = Vector<float>.Build.Dense(8);
 
             bcmModel.Train(_firstVector);
             bcmModel.Train(_secondVector);

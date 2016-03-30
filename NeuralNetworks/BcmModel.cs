@@ -1,22 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MathNet.Numerics.LinearAlgebra;
+using System;
+using System.Linq;
 
 namespace NeuralNetworks
 {
     public class BcmModel
     {
-        public int[,] CorrelationMatrix { get; private set; }
+        public Matrix<float> CorrelationMatrix { get; private set; }
         private int _vectorCount;
 
-        public void Train(int[] vector)
+        public void Train(Vector<float> vector)
         {
+            if (!CheckVectorValues(vector))
+            {
+                throw new ArgumentException("Vector values must be equal to 1 or 0.");
+            }
+
             VerifyVectorBeforeTraining(vector);
             
-            for (int i = 0; i < vector.Length; i++)
+            for (int i = 0; i < vector.Count; i++)
             {
-                for (int j = 0; j < vector.Length; j++)
+                for (int j = 0; j < vector.Count; j++)
                 {
-                    if (vector[i] * vector[j] == 1)
+                    if ((int)vector[i] * (int)vector[j] == 1)
                     {
                         CorrelationMatrix[i,j] = 1;
                     }
@@ -26,29 +32,28 @@ namespace NeuralNetworks
             _vectorCount++;
         }
 
-        public bool Test(int[] vector, int threshold)
+        public bool Test(Vector<float> vector, int threshold)
         {
-            int[] resultVector = NeuralNetworksMath.MultiplyVectorByMatrix(vector, CorrelationMatrix);
-            resultVector = DivideVectorByThreshold(resultVector, threshold);
-            return VerifyVectors(vector, resultVector);
+            Vector<float> resultVector = (vector * CorrelationMatrix).Map(value => value >= threshold ? 1f : 0f);
+            return resultVector.Equals(vector);
         }
 
-        private void VerifyVectorBeforeTraining(IReadOnlyCollection<int> vector)
+        private void VerifyVectorBeforeTraining(Vector<float> vector)
         {
             switch (_vectorCount)
             {
                 case 0:
                 {
-                    CorrelationMatrix = new int[vector.Count, vector.Count];
+                    CorrelationMatrix = Matrix<float>.Build.DenseOfArray(new float[vector.Count, vector.Count]);
                     break;
                 }
                 case 1:
                 {
-                    if (vector.Count != CorrelationMatrix.GetLength(0))
+                    if (vector.Count != CorrelationMatrix.ColumnCount)
                     {
                         throw new ArgumentException(
                             "The length of the vector is different than the dimension of the matrix. The correct vector length: " +
-                            CorrelationMatrix.GetLength(0));
+                            CorrelationMatrix.ColumnCount);
                     }
                     break;
                 }
@@ -59,32 +64,9 @@ namespace NeuralNetworks
             }
         }
 
-        private int[] DivideVectorByThreshold(int[] vector, int threshold)
+        private bool CheckVectorValues(Vector<float> vector)
         {
-            for (int i = 0; i < vector.Length; i++)
-            {
-                vector[i] /= threshold;
-            }
-
-            return vector;
-        }
-
-        private bool VerifyVectors(int[] questionVector, int[] resultVector)
-        {
-            if (questionVector.Length != resultVector.Length)
-            {
-                throw new ArgumentException("Vectors must have same length.");
-            }
-
-            for (int i = 0; i < questionVector.Length; i++)
-            {
-                if (questionVector[i] != resultVector[i])
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return vector.All(value => (int) value == 1 || (int) value == 0);
         }
     }
 }
