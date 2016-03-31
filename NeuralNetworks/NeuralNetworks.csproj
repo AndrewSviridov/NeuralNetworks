@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BamModel.cs" />
     <Compile Include="BcmModel.cs" />
     <Compile Include="NeuralNetworksMath.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
