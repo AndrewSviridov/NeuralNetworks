@@ -72,5 +72,91 @@ namespace NeuralNetworks.Tests
 
             Assert.Throws<ArgumentException>(() => bamModel.Train(_image2, nameWithBadLength));
         }
+
+        [Fact]
+        public void RecoveringNameWithOneGivenImageVectorShouldReturnRightName()
+        {
+            var bamModel = new BamModel();
+            var imagesMatrix = Matrix<float>.Build.DenseOfRowVectors(_image1);
+            var namesMatrix = Matrix<float>.Build.DenseOfRowVectors(_name1);
+
+            bamModel.Train(_image1, _name1);
+            bamModel.Train(_image2, _name2);
+
+            Matrix<float> resultNamesMatrix = bamModel.RecoverName(imagesMatrix);
+            _output.WriteLine(resultNamesMatrix.ToString());
+
+            Assert.Equal(namesMatrix, resultNamesMatrix);
+        }
+
+        [Fact]
+        public void RecoveringNameWithTwoGivenImageVectorsShouldReturnRightNames()
+        {
+            var bamModel = new BamModel();
+            var imagesMatrix = Matrix<float>.Build.DenseOfRowVectors(_image1, _image2);
+            var namesMatrix = Matrix<float>.Build.DenseOfRowVectors(_name1, _name2);
+
+            bamModel.Train(_image1, _name1);
+            bamModel.Train(_image2, _name2);
+
+            Matrix<float> resultNamesMatrix = bamModel.RecoverName(imagesMatrix);
+            _output.WriteLine(resultNamesMatrix.ToString());
+
+            Assert.Equal(namesMatrix, resultNamesMatrix);
+        }
+
+        [Fact]
+        public void RecoveringNameFromImageVectorWithWrongLengthShouldThrowArgumentException()
+        {
+            var bamModel = new BamModel();
+            var imagesMatrixWithWrongColumnLength = Matrix<float>.Build.DenseOfArray(new float[1, 10]);
+
+            bamModel.Train(_image1, _name1);
+
+            Assert.Throws<ArgumentException>(() => bamModel.RecoverName(imagesMatrixWithWrongColumnLength));
+        }
+
+        [Fact]
+        public void RecoveringImageWithOneGivenNameVectorShouldReturnRightImage()
+        {
+            var bamModel = new BamModel();
+            var namesMatrix = Matrix<float>.Build.DenseOfRowVectors(_name1);
+            var imagesMatrix = Matrix<float>.Build.DenseOfRowVectors(_image1);
+
+            bamModel.Train(_image1, _name1);
+            bamModel.Train(_image2, _name2);
+
+            Matrix<float> resultNamesMatrix = bamModel.RecoverImage(namesMatrix);
+            _output.WriteLine(resultNamesMatrix.ToString());
+
+            Assert.Equal(imagesMatrix, resultNamesMatrix);
+        }
+
+        [Fact]
+        public void RecoveringImageWithTwoGivenNameVectorsShouldReturnRightImages()
+        {
+            var bamModel = new BamModel();
+            var namesMatrix = Matrix<float>.Build.DenseOfRowVectors(_name1, _name2);
+            var imagesMatrix = Matrix<float>.Build.DenseOfRowVectors(_image1, _image2);
+
+            bamModel.Train(_image1, _name1);
+            bamModel.Train(_image2, _name2);
+
+            Matrix<float> resultNamesMatrix = bamModel.RecoverImage(namesMatrix);
+            _output.WriteLine(resultNamesMatrix.ToString());
+
+            Assert.Equal(imagesMatrix, resultNamesMatrix);
+        }
+
+        [Fact]
+        public void RecoveringImageFromNameVectorWithWrongLengthShouldThrowArgumentException()
+        {
+            var bamModel = new BamModel();
+            var namesMatrixWithWrongColumnLength = Matrix<float>.Build.DenseOfArray(new float[1, 10]);
+
+            bamModel.Train(_image1, _name1);
+
+            Assert.Throws<ArgumentException>(() => bamModel.RecoverName(namesMatrixWithWrongColumnLength));
+        }
     }
 }
