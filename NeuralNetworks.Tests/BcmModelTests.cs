@@ -1,5 +1,6 @@
-﻿using MathNet.Numerics.LinearAlgebra;
-using System;
+﻿using System;
+using FluentAssertions;
+using MathNet.Numerics.LinearAlgebra;
 using Xunit;
 
 namespace NeuralNetworks.Tests
@@ -16,15 +17,15 @@ namespace NeuralNetworks.Tests
             var bcmModel = new BcmModel();
 
             bcmModel.Train(_firstVector);
-
-            Assert.Equal(6, bcmModel.CorrelationMatrix.ColumnCount);
+            
+            bcmModel.CorrelationMatrix.ColumnCount.ShouldBeEquivalentTo(6);
         }
 
         [Fact]
         public void SecondTrainedVectorShouldGiveRightMatrix()
         {
             var bcmModel = new BcmModel();
-            var rightMatrix = Matrix<float>.Build.DenseOfArray(new[,]
+            var correctMatrix = Matrix<float>.Build.DenseOfArray(new[,]
             {
                 {1f, 1, 0, 0, 0, 0},
                 {1, 1, 0, 0, 0, 1},
@@ -36,8 +37,8 @@ namespace NeuralNetworks.Tests
 
             bcmModel.Train(_firstVector);
             bcmModel.Train(_secondVector);
-
-            Assert.Equal(rightMatrix, bcmModel.CorrelationMatrix);
+            
+            bcmModel.CorrelationMatrix.ShouldBeEquivalentTo(correctMatrix);
         }
 
         [Fact]
@@ -47,8 +48,10 @@ namespace NeuralNetworks.Tests
             var vectorWithOtherLength = Vector<float>.Build.Dense(8);
 
             bcmModel.Train(_firstVector);
+            
+            Action trainingWithDifferentLengths = () => bcmModel.Train(vectorWithOtherLength);
 
-            Assert.Throws<ArgumentException>(() => bcmModel.Train(vectorWithOtherLength));
+            trainingWithDifferentLengths.ShouldThrow<ArgumentException>();
         }
 
         [Fact]
@@ -60,7 +63,9 @@ namespace NeuralNetworks.Tests
             bcmModel.Train(_firstVector);
             bcmModel.Train(_secondVector);
 
-            Assert.Throws<InvalidOperationException>(() => bcmModel.Train(thirdVector));
+            Action trainingWithKnownVector = () => bcmModel.Train(thirdVector);
+
+            trainingWithKnownVector.ShouldThrow<InvalidOperationException>();
         }
 
         [Fact]
@@ -69,7 +74,9 @@ namespace NeuralNetworks.Tests
             var bcmModel = new BcmModel();
             Vector<float> vectorWithBadValues = Vector<float>.Build.DenseOfArray(new[] { 1f, 1, 4, 0, 0, 0 });
 
-            Assert.Throws<ArgumentException>(() => bcmModel.Train(vectorWithBadValues));
+            Action trainingWithBadValues = () => bcmModel.Train(vectorWithBadValues);
+
+            trainingWithBadValues.ShouldThrow<ArgumentException>();
         }
 
         [Fact]
@@ -81,7 +88,7 @@ namespace NeuralNetworks.Tests
             bcmModel.Train(_firstVector);
             bcmModel.Train(_secondVector);
 
-            Assert.True(bcmModel.Test(_firstVector, threshold));
+            bcmModel.Test(_firstVector, threshold).Should().BeTrue();
         }
 
         [Fact]
@@ -93,7 +100,7 @@ namespace NeuralNetworks.Tests
             bcmModel.Train(_firstVector);
             bcmModel.Train(_secondVector);
 
-            Assert.True(bcmModel.Test(_secondVector, threshold));
+            bcmModel.Test(_secondVector, threshold).Should().BeTrue();
         }
 
         [Fact]
@@ -106,7 +113,7 @@ namespace NeuralNetworks.Tests
             bcmModel.Train(_firstVector);
             bcmModel.Train(_secondVector);
 
-            Assert.False(bcmModel.Test(unknownVector, threshold));
+            bcmModel.Test(unknownVector, threshold).Should().BeFalse();
         }
 
         [Fact]
@@ -119,7 +126,9 @@ namespace NeuralNetworks.Tests
             bcmModel.Train(_firstVector);
             bcmModel.Train(_secondVector);
 
-            Assert.Throws<ArgumentException>(() => bcmModel.Test(vectorWithOtherLength, threshold));
+            Action testingWithDifferentLengths = () => bcmModel.Test(vectorWithOtherLength, threshold);
+
+            testingWithDifferentLengths.ShouldThrow<ArgumentException>();
         }
     }
 }

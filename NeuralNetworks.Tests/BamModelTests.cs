@@ -1,5 +1,6 @@
-﻿using MathNet.Numerics.LinearAlgebra;
-using System;
+﻿using System;
+using FluentAssertions;
+using MathNet.Numerics.LinearAlgebra;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -26,15 +27,15 @@ namespace NeuralNetworks.Tests
             bamModel.Train(_image1, _name1);
 
             _output.WriteLine(bamModel.WeightsMatrix.ToString());
-            Assert.Equal(6, bamModel.WeightsMatrix.RowCount);
-            Assert.Equal(4, bamModel.WeightsMatrix.ColumnCount);
+            bamModel.WeightsMatrix.RowCount.ShouldBeEquivalentTo(6);
+            bamModel.WeightsMatrix.ColumnCount.ShouldBeEquivalentTo(4);
         }
 
         [Fact]
         public void SecondTrainingShouldGiveRightWeightMatrix()
         {
             var bamModel = new BamModel();
-            var rightMatrix = Matrix<float>.Build.DenseOfArray(new[,]
+            var correctMatrix = Matrix<float>.Build.DenseOfArray(new[,]
             {
                 {0f, -2, 2, 0},
                 {0, 2, -2, 0},
@@ -48,7 +49,7 @@ namespace NeuralNetworks.Tests
             bamModel.Train(_image2, _name2);
 
             _output.WriteLine(bamModel.WeightsMatrix.ToString());
-            Assert.Equal(rightMatrix, bamModel.WeightsMatrix);
+            bamModel.WeightsMatrix.ShouldBeEquivalentTo(correctMatrix);
         }
 
         [Fact]
@@ -58,8 +59,10 @@ namespace NeuralNetworks.Tests
             var imageWithBadLength = Vector<float>.Build.DenseOfArray(new float[3]);
 
             bamModel.Train(_image1, _name1);
+            
+            Action validatingImageLength = () => bamModel.Train(imageWithBadLength, _name2);
 
-            Assert.Throws<ArgumentException>(() => bamModel.Train(imageWithBadLength, _name2));
+            validatingImageLength.ShouldThrow<ArgumentException>();
         }
 
         [Fact]
@@ -70,7 +73,9 @@ namespace NeuralNetworks.Tests
 
             bamModel.Train(_image1, _name1);
 
-            Assert.Throws<ArgumentException>(() => bamModel.Train(_image2, nameWithBadLength));
+            Action validatingImageLength = () => bamModel.Train(_image2, nameWithBadLength);
+
+            validatingImageLength.ShouldThrow<ArgumentException>();
         }
 
         [Fact]
@@ -86,7 +91,7 @@ namespace NeuralNetworks.Tests
             Matrix<float> resultNamesMatrix = bamModel.RecoverName(imagesMatrix);
             _output.WriteLine(resultNamesMatrix.ToString());
 
-            Assert.Equal(namesMatrix, resultNamesMatrix);
+            resultNamesMatrix.ShouldBeEquivalentTo(namesMatrix);
         }
 
         [Fact]
@@ -102,7 +107,7 @@ namespace NeuralNetworks.Tests
             Matrix<float> resultNamesMatrix = bamModel.RecoverName(imagesMatrix);
             _output.WriteLine(resultNamesMatrix.ToString());
 
-            Assert.Equal(namesMatrix, resultNamesMatrix);
+            resultNamesMatrix.ShouldBeEquivalentTo(namesMatrix);
         }
 
         [Fact]
@@ -113,7 +118,9 @@ namespace NeuralNetworks.Tests
 
             bamModel.Train(_image1, _name1);
 
-            Assert.Throws<ArgumentException>(() => bamModel.RecoverName(imagesMatrixWithWrongColumnLength));
+            Action recoveringNameFromWrongImage = () => bamModel.RecoverName(imagesMatrixWithWrongColumnLength);
+
+            recoveringNameFromWrongImage.ShouldThrow<ArgumentException>();
         }
 
         [Fact]
@@ -128,8 +135,8 @@ namespace NeuralNetworks.Tests
 
             Matrix<float> resultNamesMatrix = bamModel.RecoverImage(namesMatrix);
             _output.WriteLine(resultNamesMatrix.ToString());
-
-            Assert.Equal(imagesMatrix, resultNamesMatrix);
+            
+            resultNamesMatrix.ShouldBeEquivalentTo(imagesMatrix);
         }
 
         [Fact]
@@ -145,7 +152,7 @@ namespace NeuralNetworks.Tests
             Matrix<float> resultNamesMatrix = bamModel.RecoverImage(namesMatrix);
             _output.WriteLine(resultNamesMatrix.ToString());
 
-            Assert.Equal(imagesMatrix, resultNamesMatrix);
+            resultNamesMatrix.ShouldBeEquivalentTo(imagesMatrix);
         }
 
         [Fact]
@@ -155,8 +162,10 @@ namespace NeuralNetworks.Tests
             var namesMatrixWithWrongColumnLength = Matrix<float>.Build.DenseOfArray(new float[1, 10]);
 
             bamModel.Train(_image1, _name1);
+            
+            Action recoveringImageFromWrongName = () => bamModel.RecoverImage(namesMatrixWithWrongColumnLength);
 
-            Assert.Throws<ArgumentException>(() => bamModel.RecoverName(namesMatrixWithWrongColumnLength));
+            recoveringImageFromWrongName.ShouldThrow<ArgumentException>();
         }
     }
 }
