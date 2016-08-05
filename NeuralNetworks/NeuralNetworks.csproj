@@ -48,25 +48,16 @@
     <Compile Include="BamModel.cs" />
     <Compile Include="BcmModel.cs" />
     <Compile Include="SingleLayerPerceptron.cs" />
-    <Compile Include="SingleLayerPerceptronHelpers\IrisReader.cs" />
+    <Compile Include="SingleLayerPerceptronHelpers\PerceptronVector.cs" />
+    <Compile Include="SingleLayerPerceptronHelpers\PerceptronVectorReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SingleLayerPerceptronHelpers\Pocket.cs" />
+    <Compile Include="SingleLayerPerceptronHelpers\Randomizer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Content Include="Data\SingleLayerPerceptron\iris_2vs3_A_te.txt" />
-    <Content Include="Data\SingleLayerPerceptron\iris_2vs3_A_tr.txt" />
-    <Content Include="Data\SingleLayerPerceptron\iris_2vs3_B_te.txt" />
-    <Content Include="Data\SingleLayerPerceptron\iris_2vs3_B_tr.txt" />
-    <Content Include="Data\SingleLayerPerceptron\iris_2vs3_C_te.txt" />
-    <Content Include="Data\SingleLayerPerceptron\iris_2vs3_C_tr.txt" />
-    <Content Include="Data\SingleLayerPerceptron\iris_2vs3_D_te.txt" />
-    <Content Include="Data\SingleLayerPerceptron\iris_2vs3_D_tr.txt" />
-    <Content Include="Data\SingleLayerPerceptron\iris_2vs3_E_te.txt" />
-    <Content Include="Data\SingleLayerPerceptron\iris_2vs3_E_tr.txt" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
