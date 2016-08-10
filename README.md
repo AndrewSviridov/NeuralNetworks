@@ -1,2 +1,5 @@
 # NeuralNetworks
-Artificial neural networks (BCM, BAM, etc.)
+Artificial neural networks
+- Binary Correlation Matrix (BCM)
+- Bidirectional Associative Memory (BAM)
+- Single Layer Perceptron (PLA - Pocket Learning Algorithm)
