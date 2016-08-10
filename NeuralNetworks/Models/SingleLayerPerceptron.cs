@@ -1,28 +1,30 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
 using NeuralNetworks.SingleLayerPerceptronHelpers;
+using NeuralNetworks.Utility;
 
-namespace NeuralNetworks
+namespace NeuralNetworks.Models
 {
     public class SingleLayerPerceptron
     {
         private Pocket _pocket;
-        private PerceptronVectorReader _perceptronVectorReader;
+        private DataReader _dataReader;
 
         public SingleLayerPerceptron()
         {
-            _perceptronVectorReader = new PerceptronVectorReader();
+            _dataReader = new DataReader();
             _pocket = new Pocket();
         }
 
-        public Pocket Train(int iterations, string datafilePath, double learningRate = 1.0)
+        public Pocket Teach(string datafilePath, char separator, char decimalPoint, int iterations, double learningRate = 1.0)
         {
             int age = 0;
-            var perceptronVectors = _perceptronVectorReader.ReadFromTextFile(datafilePath);
+            var perceptronVectors = _dataReader.ReadPerceptronDataFromTextFile(datafilePath, separator, decimalPoint);
             var randomizer = new Randomizer();
             var weights = randomizer.RandomizeWeights(perceptronVectors[0].Data.Count);
             var bias = randomizer.RandomizeBias();
 
-            SaveWeightsBiasAndAgeInPocket(weights, bias, age);
+            SaveWeightsBiasAndAgeInPocket(
+                new NeuralVector(Vector<double>.Build.Dense(perceptronVectors[0].Data.Count), 0), weights, bias, age);
 
             while (iterations > 0)
             {
@@ -36,7 +38,7 @@ namespace NeuralNetworks
 
                     if(ActualAgeIsGreaterThanPocketAge(age, _pocket.Age))
                     {
-                        SaveWeightsBiasAndAgeInPocket(weights, bias, age);
+                        SaveWeightsBiasAndAgeInPocket(perceptronVector, weights, bias, age);
                     }
                 }
                 else
@@ -52,46 +54,9 @@ namespace NeuralNetworks
             return _pocket;
         }
 
-        private double CalculatePerceptronFunction(PerceptronVector perceptronVector, Vector<double> weights, double bias)
+        public double Test(string datafilePath, char separator, char decimalPoint, Vector<double> weights, double bias)
         {
-            return perceptronVector.Data * weights + bias;
-        }
-
-        private bool CalculationsAreCompatibile(double calculationResult, PerceptronVector perceptronVector)
-        {
-            if (calculationResult >= 0 && perceptronVector.Class == 1)
-            {
-                return true;
-            }
-
-            return calculationResult < 0 && perceptronVector.Class == -1;
-        }
-
-        private bool ActualAgeIsGreaterThanPocketAge(int actualAge, int ageInPocket)
-        {
-            return actualAge > ageInPocket;
-        }
-
-        private void SaveWeightsBiasAndAgeInPocket(Vector<double> weights, double bias, int age)
-        {
-            _pocket.Weights = weights;
-            _pocket.Bias = bias;
-            _pocket.Age = age;
-        }
-
-        private void AdjustWeights(ref Vector<double> weights, PerceptronVector perceptronVector, double learningRate)
-        {
-            weights += learningRate * perceptronVector.Class * perceptronVector.Data;
-        }
-
-        private void AdjustBias(ref double bias, PerceptronVector perceptronVector)
-        {
-            bias += perceptronVector.Class;
-        }
-
-        public double Test(string datafilePath, Vector<double> weights, double bias)
-        {
-            var perceptronTestVectors = _perceptronVectorReader.ReadFromTextFile(datafilePath);
+            var perceptronTestVectors = _dataReader.ReadPerceptronDataFromTextFile(datafilePath, separator, decimalPoint);
             int correctlyClassifiedClasses = 0;
 
             foreach (var perceptronTestVector in perceptronTestVectors)
@@ -108,12 +73,50 @@ namespace NeuralNetworks
             return (double)correctlyClassifiedClasses / perceptronTestVectors.Count * 100;  // Accuracy in percents
         }
 
+        private double CalculatePerceptronFunction(NeuralVector perceptronVector, Vector<double> weights, double bias)
+        {
+            return perceptronVector.Data * weights + bias;
+        }
+
+        private bool CalculationsAreCompatibile(double calculationResult, NeuralVector perceptronVector)
+        {
+            if (calculationResult >= 0 && perceptronVector.Class == 1)
+            {
+                return true;
+            }
+
+            return calculationResult < 0 && perceptronVector.Class == -1;
+        }
+
+        private bool ActualAgeIsGreaterThanPocketAge(int actualAge, int ageInPocket)
+        {
+            return actualAge > ageInPocket;
+        }
+
+        private void SaveWeightsBiasAndAgeInPocket(NeuralVector winner, Vector<double> weights, double bias, int age)
+        {
+            _pocket.Winner = winner;
+            _pocket.Weights = weights;
+            _pocket.Bias = bias;
+            _pocket.Age = age;
+        }
+
+        private void AdjustWeights(ref Vector<double> weights, NeuralVector perceptronVector, double learningRate)
+        {
+            weights += learningRate * perceptronVector.Class * perceptronVector.Data;
+        }
+
+        private void AdjustBias(ref double bias, NeuralVector perceptronVector)
+        {
+            bias += perceptronVector.Class;
+        }
+
         private int ClassifyClass(double calculationResult)
         {
             return calculationResult >= 0 ? 1 : -1;
         }
 
-        private bool ClassIsCorrectlyClassified(PerceptronVector perceptronVector, int classifiedClass)
+        private bool ClassIsCorrectlyClassified(NeuralVector perceptronVector, int classifiedClass)
         {
             return perceptronVector.Class == classifiedClass;
         }
