@@ -1,15 +1,15 @@
-﻿using MathNet.Numerics.LinearAlgebra;
-using System;
+﻿using System;
 using System.Linq;
+using MathNet.Numerics.LinearAlgebra;
 
-namespace NeuralNetworks
+namespace NeuralNetworks.Models
 {
     public class BcmModel
     {
         public Matrix<float> CorrelationMatrix { get; private set; }
         private int _vectorCount;
 
-        public void Train(Vector<float> vector)
+        public void Teach(Vector<float> vector)
         {
             if (!CheckVectorValues(vector))
             {

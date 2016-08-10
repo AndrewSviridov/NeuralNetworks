@@ -1,7 +1,7 @@
-﻿using MathNet.Numerics.LinearAlgebra;
-using System;
+﻿using System;
+using MathNet.Numerics.LinearAlgebra;
 
-namespace NeuralNetworks
+namespace NeuralNetworks.Models
 {
     public class BamModel
     {
@@ -9,7 +9,7 @@ namespace NeuralNetworks
         private bool _isFirstTraining;
 
 
-        public void Train(Vector<float> image, Vector<float> name)
+        public void Teach(Vector<float> image, Vector<float> name)
         {
             VerifyVectorsBeforeTraining(image, name);
 
