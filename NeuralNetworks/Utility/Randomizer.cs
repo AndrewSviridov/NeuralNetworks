@@ -31,11 +31,11 @@ namespace NeuralNetworks.SingleLayerPerceptronHelpers
             return _rand.NextDouble() * 0.4 - 0.2;
         }
 
-        public NeuralVector SelectRandomVector(List<NeuralVector> irisesList)
+        public NeuralVector SelectRandomVector(List<NeuralVector> neuralVectors)
         {
-            var randSelect = _rand.Next(irisesList.Count);
+            var randSelect = _rand.Next(neuralVectors.Count);
 
-            return irisesList[randSelect];
+            return neuralVectors[randSelect];
         }
     }
 }
