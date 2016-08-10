@@ -1,6 +1,7 @@
 ﻿using System;
 using FluentAssertions;
 using MathNet.Numerics.LinearAlgebra;
+using NeuralNetworks.Models;
 using Xunit;
 
 namespace NeuralNetworks.Tests
@@ -16,7 +17,7 @@ namespace NeuralNetworks.Tests
         {
             var bcmModel = new BcmModel();
 
-            bcmModel.Train(_firstVector);
+            bcmModel.Teach(_firstVector);
             
             bcmModel.CorrelationMatrix.ColumnCount.ShouldBeEquivalentTo(6);
         }
@@ -35,8 +36,8 @@ namespace NeuralNetworks.Tests
                 {0, 1, 0, 0, 0, 1}
             });
 
-            bcmModel.Train(_firstVector);
-            bcmModel.Train(_secondVector);
+            bcmModel.Teach(_firstVector);
+            bcmModel.Teach(_secondVector);
             
             bcmModel.CorrelationMatrix.ShouldBeEquivalentTo(correctMatrix);
         }
@@ -47,9 +48,9 @@ namespace NeuralNetworks.Tests
             var bcmModel = new BcmModel();
             var vectorWithOtherLength = Vector<float>.Build.Dense(8);
 
-            bcmModel.Train(_firstVector);
+            bcmModel.Teach(_firstVector);
             
-            Action trainingWithDifferentLengths = () => bcmModel.Train(vectorWithOtherLength);
+            Action trainingWithDifferentLengths = () => bcmModel.Teach(vectorWithOtherLength);
 
             trainingWithDifferentLengths.ShouldThrow<ArgumentException>();
         }
@@ -60,10 +61,10 @@ namespace NeuralNetworks.Tests
             var bcmModel = new BcmModel();
             var thirdVector = Vector<float>.Build.Dense(6);
 
-            bcmModel.Train(_firstVector);
-            bcmModel.Train(_secondVector);
+            bcmModel.Teach(_firstVector);
+            bcmModel.Teach(_secondVector);
 
-            Action trainingWithKnownVector = () => bcmModel.Train(thirdVector);
+            Action trainingWithKnownVector = () => bcmModel.Teach(thirdVector);
 
             trainingWithKnownVector.ShouldThrow<InvalidOperationException>();
         }
@@ -74,7 +75,7 @@ namespace NeuralNetworks.Tests
             var bcmModel = new BcmModel();
             Vector<float> vectorWithBadValues = Vector<float>.Build.DenseOfArray(new[] { 1f, 1, 4, 0, 0, 0 });
 
-            Action trainingWithBadValues = () => bcmModel.Train(vectorWithBadValues);
+            Action trainingWithBadValues = () => bcmModel.Teach(vectorWithBadValues);
 
             trainingWithBadValues.ShouldThrow<ArgumentException>();
         }
@@ -85,8 +86,8 @@ namespace NeuralNetworks.Tests
             var bcmModel = new BcmModel();
             var threshold = 2;
 
-            bcmModel.Train(_firstVector);
-            bcmModel.Train(_secondVector);
+            bcmModel.Teach(_firstVector);
+            bcmModel.Teach(_secondVector);
 
             bcmModel.Test(_firstVector, threshold).Should().BeTrue();
         }
@@ -97,8 +98,8 @@ namespace NeuralNetworks.Tests
             var bcmModel = new BcmModel();
             var threshold = 2;
 
-            bcmModel.Train(_firstVector);
-            bcmModel.Train(_secondVector);
+            bcmModel.Teach(_firstVector);
+            bcmModel.Teach(_secondVector);
 
             bcmModel.Test(_secondVector, threshold).Should().BeTrue();
         }
@@ -110,8 +111,8 @@ namespace NeuralNetworks.Tests
             var threshold = 2;
             var unknownVector = Vector<float>.Build.DenseOfArray(new[] { 1f, 1, 1, 1, 0, 0 });
 
-            bcmModel.Train(_firstVector);
-            bcmModel.Train(_secondVector);
+            bcmModel.Teach(_firstVector);
+            bcmModel.Teach(_secondVector);
 
             bcmModel.Test(unknownVector, threshold).Should().BeFalse();
         }
@@ -123,8 +124,8 @@ namespace NeuralNetworks.Tests
             var threshold = 2;
             var vectorWithOtherLength = Vector<float>.Build.Dense(8);
 
-            bcmModel.Train(_firstVector);
-            bcmModel.Train(_secondVector);
+            bcmModel.Teach(_firstVector);
+            bcmModel.Teach(_secondVector);
 
             Action testingWithDifferentLengths = () => bcmModel.Test(vectorWithOtherLength, threshold);
 
