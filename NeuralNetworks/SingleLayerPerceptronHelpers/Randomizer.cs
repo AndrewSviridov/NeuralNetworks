@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MathNet.Numerics.LinearAlgebra;
+using NeuralNetworks.Utility;
 
 namespace NeuralNetworks.SingleLayerPerceptronHelpers
 {
@@ -30,7 +31,7 @@ namespace NeuralNetworks.SingleLayerPerceptronHelpers
             return _rand.NextDouble() * 0.4 - 0.2;
         }
 
-        public PerceptronVector SelectRandomVector(List<PerceptronVector> irisesList)
+        public NeuralVector SelectRandomVector(List<NeuralVector> irisesList)
         {
             var randSelect = _rand.Next(irisesList.Count);
 
