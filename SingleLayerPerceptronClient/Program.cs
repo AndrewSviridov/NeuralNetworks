@@ -1,5 +1,5 @@
 ﻿using System;
-using NeuralNetworks;
+using NeuralNetworks.Models;
 
 namespace SingleLayerPerceptronClient
 {
@@ -21,9 +21,11 @@ namespace SingleLayerPerceptronClient
 
         private static double ExecuteAlgorithmForSpecifiedData(SingleLayerPerceptron singleLayerPerceptron, string treningDataPath, string testDataPath)
         {
-            var winner = singleLayerPerceptron.Train(1000, treningDataPath, 0.2);
+            char separator = '\t';
+            char decimalPoint = '.';
+            var winner = singleLayerPerceptron.Teach(treningDataPath, separator, decimalPoint, 1000, 0.2);
 
-            return singleLayerPerceptron.Test(testDataPath, winner.Weights, winner.Bias);
+            return singleLayerPerceptron.Test(testDataPath, separator, decimalPoint, winner.Weights, winner.Bias);
         }
     }
 }
