@@ -1,4 +1,5 @@
-﻿using MathNet.Numerics.LinearAlgebra;
+﻿using System.Linq;
+using MathNet.Numerics.LinearAlgebra;
 using NeuralNetworks.SingleLayerPerceptronHelpers;
 using NeuralNetworks.Utility;
 
@@ -20,11 +21,11 @@ namespace NeuralNetworks.Models
             int age = 0;
             var perceptronVectors = _dataReader.ReadPerceptronDataFromTextFile(datafilePath, separator, decimalPoint);
             var randomizer = new Randomizer();
-            var weights = randomizer.RandomizeWeights(perceptronVectors[0].Data.Count);
+            var weights = randomizer.RandomizeWeights(perceptronVectors.First().Data.Count);
             var bias = randomizer.RandomizeBias();
 
             SaveWeightsBiasAndAgeInPocket(
-                new NeuralVector(Vector<double>.Build.Dense(perceptronVectors[0].Data.Count), 0), weights, bias, age);
+                new NeuralVector(Vector<double>.Build.Dense(perceptronVectors.First().Data.Count), 0), weights, bias, age);
 
             while (iterations > 0)
             {
