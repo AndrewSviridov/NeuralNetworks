@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using FluentAssertions;
 using MathNet.Numerics.LinearAlgebra;
-using NeuralNetworks.Models;
 using NeuralNetworks.Utility;
 using Xunit;
 using Xunit.Abstractions;
@@ -47,10 +46,6 @@ namespace NeuralNetworks.Tests.SingleLayerPerceptronTests
             };
 
             var readData = _dataReader.ReadHopfieldDataFromTextFile(_dataFolder + "sampleHopfield.txt", '\t');
-
-            var hopfield = new HopfieldNetwork();
-            var arr = hopfield.Teach(_dataFolder + "sampleHopfield2.txt", ' ');
-            _output.WriteLine(arr.ToMatrixString());
 
             readData.ShouldBeEquivalentTo(correctData);
         }
