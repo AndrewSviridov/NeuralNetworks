@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using MathNet.Numerics.LinearAlgebra;
-using NeuralNetworks.Utility;
 
-namespace NeuralNetworks.SingleLayerPerceptronHelpers
+namespace NeuralNetworks.Utility
 {
     public class Randomizer
     {
