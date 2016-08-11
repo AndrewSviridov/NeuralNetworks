@@ -31,6 +31,18 @@ namespace NeuralNetworks.SingleLayerPerceptronHelpers
             return _rand.NextDouble() * 0.4 - 0.2;
         }
 
+        public Vector<double> RandomizeBiases(int vectorSize)
+        {
+            var biases = new double[vectorSize];
+
+            for (int index = 0; index < vectorSize; index++)
+            {
+                biases[index] = RandomizeBias();
+            }
+
+            return Vector<double>.Build.DenseOfArray(biases);
+        }
+
         public NeuralVector SelectRandomVector(List<NeuralVector> neuralVectors)
         {
             var randSelect = _rand.Next(neuralVectors.Count);
