@@ -69,9 +69,9 @@ namespace NeuralNetworks.Models
 
         private double CalculateOutputForNeuron(int neuronIndex)
         {
-            if (!Enumerable.Range(0, _numberOfNeurons - 1).Contains(neuronIndex))
+            if (!Enumerable.Range(0, _numberOfNeurons).Contains(neuronIndex))
             {
-                throw new ArgumentException("Wrong neuron index!");
+                throw new ArgumentException("Neuron index out of range!");
             }
 
             var sum = 0.0;
