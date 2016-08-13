@@ -72,7 +72,7 @@
     <Compile Include="BamModelTests.cs" />
     <Compile Include="BcmModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SingleLayerPerceptronTests\DataReaderTests.cs" />
+    <Compile Include="UtilitiesTests\DataReaderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
