@@ -4,13 +4,13 @@ using MathNet.Numerics.LinearAlgebra;
 
 namespace NeuralNetworks.Utility
 {
-    public class Randomizer
+    internal class Randomizer
     {
-        private readonly Random _rand;
+        private readonly Random _random;
 
         public Randomizer()
         {
-            _rand = new Random();
+            _random = new Random();
         }
 
         public Vector<double> RandomizeWeights(int vectorSize)
@@ -19,7 +19,7 @@ namespace NeuralNetworks.Utility
 
             for (int index = 0; index < vectorSize; index++)
             {
-                weights[index] = _rand.NextDouble() * 0.4 - 0.2;   // from -0.2 to 0.2
+                weights[index] = _random.NextDouble() * 0.4 - 0.2;   // from -0.2 to 0.2
             }
 
             return Vector<double>.Build.DenseOfArray(weights);
@@ -27,7 +27,7 @@ namespace NeuralNetworks.Utility
 
         public double RandomizeBias()
         {
-            return _rand.NextDouble() * 0.4 - 0.2;
+            return _random.NextDouble() * 0.4 - 0.2;
         }
 
         public Vector<double> RandomizeBiases(int vectorSize)
@@ -44,7 +44,7 @@ namespace NeuralNetworks.Utility
 
         public NeuralVector SelectRandomVector(List<NeuralVector> neuralVectors)
         {
-            var randSelect = _rand.Next(neuralVectors.Count);
+            var randSelect = _random.Next(neuralVectors.Count);
 
             return neuralVectors[randSelect];
         }

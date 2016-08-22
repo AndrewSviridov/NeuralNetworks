@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingleLayerPerceptronClient
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HopfieldNetworkClient", "HopfieldNetworkClient\HopfieldNetworkClient.csproj", "{85598856-C493-4250-BD2E-0FDEA149C6EC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SelfOrganizingMapClient", "SelfOrganizingMapClient\SelfOrganizingMapClient.csproj", "{28D6E81D-BD3D-4342-B27D-CBB07E76054A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{85598856-C493-4250-BD2E-0FDEA149C6EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85598856-C493-4250-BD2E-0FDEA149C6EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85598856-C493-4250-BD2E-0FDEA149C6EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28D6E81D-BD3D-4342-B27D-CBB07E76054A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28D6E81D-BD3D-4342-B27D-CBB07E76054A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28D6E81D-BD3D-4342-B27D-CBB07E76054A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28D6E81D-BD3D-4342-B27D-CBB07E76054A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,5 +48,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{7504D02F-C947-46A2-9054-F1EBEDC029AA} = {392D70A3-36B2-437B-BF29-20406F55E7E2}
 		{85598856-C493-4250-BD2E-0FDEA149C6EC} = {392D70A3-36B2-437B-BF29-20406F55E7E2}
+		{28D6E81D-BD3D-4342-B27D-CBB07E76054A} = {392D70A3-36B2-437B-BF29-20406F55E7E2}
 	EndGlobalSection
 EndGlobal
