@@ -31,21 +31,22 @@
             this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBoxTeach = new System.Windows.Forms.GroupBox();
-            this.buttonTeach = new System.Windows.Forms.Button();
-            this.buttonRefresh = new System.Windows.Forms.Button();
-            this.comboBoxFiles = new System.Windows.Forms.ComboBox();
+            this.labelPlease = new System.Windows.Forms.Label();
+            this.btnTeach = new System.Windows.Forms.Button();
+            this.btnRefresh = new System.Windows.Forms.Button();
+            this.cmbBoxFiles = new System.Windows.Forms.ComboBox();
             this.labelFile = new System.Windows.Forms.Label();
-            this.buttonSelect = new System.Windows.Forms.Button();
+            this.btnSelect = new System.Windows.Forms.Button();
             this.labelFolder = new System.Windows.Forms.Label();
-            this.textBoxFolder = new System.Windows.Forms.TextBox();
+            this.txtBoxFolder = new System.Windows.Forms.TextBox();
             this.groupBoxTest = new System.Windows.Forms.GroupBox();
-            this.textBoxOutputVector = new System.Windows.Forms.TextBox();
+            this.txtBoxOutputVector = new System.Windows.Forms.TextBox();
             this.labelOutputVector = new System.Windows.Forms.Label();
-            this.buttonTest = new System.Windows.Forms.Button();
-            this.textBoxPatternVector = new System.Windows.Forms.TextBox();
+            this.btnTest = new System.Windows.Forms.Button();
+            this.txtBoxPatternVector = new System.Windows.Forms.TextBox();
             this.labelPatternVector = new System.Windows.Forms.Label();
             this.groupBoxPattern = new System.Windows.Forms.GroupBox();
-            this.buttonClear = new System.Windows.Forms.Button();
+            this.btnClear = new System.Windows.Forms.Button();
             this.chBox15 = new System.Windows.Forms.CheckBox();
             this.chBox14 = new System.Windows.Forms.CheckBox();
             this.chBox13 = new System.Windows.Forms.CheckBox();
@@ -63,7 +64,6 @@
             this.chBox01 = new System.Windows.Forms.CheckBox();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusStripInfo = new System.Windows.Forms.ToolStripStatusLabel();
-            this.labelPlease = new System.Windows.Forms.Label();
             this.groupBoxTeach.SuspendLayout();
             this.groupBoxTest.SuspendLayout();
             this.groupBoxPattern.SuspendLayout();
@@ -88,13 +88,13 @@
             // groupBoxTeach
             // 
             this.groupBoxTeach.Controls.Add(this.labelPlease);
-            this.groupBoxTeach.Controls.Add(this.buttonTeach);
-            this.groupBoxTeach.Controls.Add(this.buttonRefresh);
-            this.groupBoxTeach.Controls.Add(this.comboBoxFiles);
+            this.groupBoxTeach.Controls.Add(this.btnTeach);
+            this.groupBoxTeach.Controls.Add(this.btnRefresh);
+            this.groupBoxTeach.Controls.Add(this.cmbBoxFiles);
             this.groupBoxTeach.Controls.Add(this.labelFile);
-            this.groupBoxTeach.Controls.Add(this.buttonSelect);
+            this.groupBoxTeach.Controls.Add(this.btnSelect);
             this.groupBoxTeach.Controls.Add(this.labelFolder);
-            this.groupBoxTeach.Controls.Add(this.textBoxFolder);
+            this.groupBoxTeach.Controls.Add(this.txtBoxFolder);
             this.groupBoxTeach.Location = new System.Drawing.Point(12, 12);
             this.groupBoxTeach.Name = "groupBoxTeach";
             this.groupBoxTeach.Size = new System.Drawing.Size(518, 102);
@@ -102,34 +102,43 @@
             this.groupBoxTeach.TabStop = false;
             this.groupBoxTeach.Text = "Teach";
             // 
-            // buttonTeach
+            // labelPlease
             // 
-            this.buttonTeach.Location = new System.Drawing.Point(399, 74);
-            this.buttonTeach.Name = "buttonTeach";
-            this.buttonTeach.Size = new System.Drawing.Size(113, 23);
-            this.buttonTeach.TabIndex = 4;
-            this.buttonTeach.Text = "Teach";
-            this.buttonTeach.UseVisualStyleBackColor = true;
-            this.buttonTeach.Click += new System.EventHandler(this.buttonTeach_Click);
+            this.labelPlease.AutoSize = true;
+            this.labelPlease.Location = new System.Drawing.Point(65, 79);
+            this.labelPlease.Name = "labelPlease";
+            this.labelPlease.Size = new System.Drawing.Size(305, 13);
+            this.labelPlease.TabIndex = 12;
+            this.labelPlease.Text = "(Please select file with only three vectors with space separator.)";
             // 
-            // buttonRefresh
+            // btnTeach
             // 
-            this.buttonRefresh.Location = new System.Drawing.Point(250, 47);
-            this.buttonRefresh.Name = "buttonRefresh";
-            this.buttonRefresh.Size = new System.Drawing.Size(75, 23);
-            this.buttonRefresh.TabIndex = 3;
-            this.buttonRefresh.Text = "Refresh";
-            this.buttonRefresh.UseVisualStyleBackColor = true;
-            this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
+            this.btnTeach.Location = new System.Drawing.Point(399, 74);
+            this.btnTeach.Name = "btnTeach";
+            this.btnTeach.Size = new System.Drawing.Size(113, 23);
+            this.btnTeach.TabIndex = 4;
+            this.btnTeach.Text = "Teach";
+            this.btnTeach.UseVisualStyleBackColor = true;
+            this.btnTeach.Click += new System.EventHandler(this.buttonTeach_Click);
             // 
-            // comboBoxFiles
+            // btnRefresh
             // 
-            this.comboBoxFiles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxFiles.FormattingEnabled = true;
-            this.comboBoxFiles.Location = new System.Drawing.Point(68, 49);
-            this.comboBoxFiles.Name = "comboBoxFiles";
-            this.comboBoxFiles.Size = new System.Drawing.Size(176, 21);
-            this.comboBoxFiles.TabIndex = 2;
+            this.btnRefresh.Location = new System.Drawing.Point(250, 47);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(75, 23);
+            this.btnRefresh.TabIndex = 3;
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
+            // 
+            // cmbBoxFiles
+            // 
+            this.cmbBoxFiles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxFiles.FormattingEnabled = true;
+            this.cmbBoxFiles.Location = new System.Drawing.Point(68, 49);
+            this.cmbBoxFiles.Name = "cmbBoxFiles";
+            this.cmbBoxFiles.Size = new System.Drawing.Size(176, 21);
+            this.cmbBoxFiles.TabIndex = 2;
             // 
             // labelFile
             // 
@@ -140,15 +149,15 @@
             this.labelFile.TabIndex = 11;
             this.labelFile.Text = "File:";
             // 
-            // buttonSelect
+            // btnSelect
             // 
-            this.buttonSelect.Location = new System.Drawing.Point(437, 20);
-            this.buttonSelect.Name = "buttonSelect";
-            this.buttonSelect.Size = new System.Drawing.Size(75, 23);
-            this.buttonSelect.TabIndex = 1;
-            this.buttonSelect.Text = "Select";
-            this.buttonSelect.UseVisualStyleBackColor = true;
-            this.buttonSelect.Click += new System.EventHandler(this.buttonSelect_Click);
+            this.btnSelect.Location = new System.Drawing.Point(437, 20);
+            this.btnSelect.Name = "btnSelect";
+            this.btnSelect.Size = new System.Drawing.Size(75, 23);
+            this.btnSelect.TabIndex = 1;
+            this.btnSelect.Text = "Select";
+            this.btnSelect.UseVisualStyleBackColor = true;
+            this.btnSelect.Click += new System.EventHandler(this.buttonSelect_Click);
             // 
             // labelFolder
             // 
@@ -159,24 +168,24 @@
             this.labelFolder.TabIndex = 0;
             this.labelFolder.Text = "Folder:";
             // 
-            // textBoxFolder
+            // txtBoxFolder
             // 
-            this.textBoxFolder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxFolder.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.textBoxFolder.Location = new System.Drawing.Point(68, 22);
-            this.textBoxFolder.Name = "textBoxFolder";
-            this.textBoxFolder.ReadOnly = true;
-            this.textBoxFolder.Size = new System.Drawing.Size(363, 20);
-            this.textBoxFolder.TabIndex = 10;
-            this.textBoxFolder.TabStop = false;
-            this.textBoxFolder.WordWrap = false;
+            this.txtBoxFolder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBoxFolder.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtBoxFolder.Location = new System.Drawing.Point(68, 22);
+            this.txtBoxFolder.Name = "txtBoxFolder";
+            this.txtBoxFolder.ReadOnly = true;
+            this.txtBoxFolder.Size = new System.Drawing.Size(363, 20);
+            this.txtBoxFolder.TabIndex = 10;
+            this.txtBoxFolder.TabStop = false;
+            this.txtBoxFolder.WordWrap = false;
             // 
             // groupBoxTest
             // 
-            this.groupBoxTest.Controls.Add(this.textBoxOutputVector);
+            this.groupBoxTest.Controls.Add(this.txtBoxOutputVector);
             this.groupBoxTest.Controls.Add(this.labelOutputVector);
-            this.groupBoxTest.Controls.Add(this.buttonTest);
-            this.groupBoxTest.Controls.Add(this.textBoxPatternVector);
+            this.groupBoxTest.Controls.Add(this.btnTest);
+            this.groupBoxTest.Controls.Add(this.txtBoxPatternVector);
             this.groupBoxTest.Controls.Add(this.labelPatternVector);
             this.groupBoxTest.Controls.Add(this.groupBoxPattern);
             this.groupBoxTest.Location = new System.Drawing.Point(13, 120);
@@ -186,15 +195,15 @@
             this.groupBoxTest.TabStop = false;
             this.groupBoxTest.Text = "Test";
             // 
-            // textBoxOutputVector
+            // txtBoxOutputVector
             // 
-            this.textBoxOutputVector.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxOutputVector.Location = new System.Drawing.Point(189, 94);
-            this.textBoxOutputVector.Name = "textBoxOutputVector";
-            this.textBoxOutputVector.ReadOnly = true;
-            this.textBoxOutputVector.Size = new System.Drawing.Size(241, 20);
-            this.textBoxOutputVector.TabIndex = 7;
-            this.textBoxOutputVector.TabStop = false;
+            this.txtBoxOutputVector.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBoxOutputVector.Location = new System.Drawing.Point(189, 94);
+            this.txtBoxOutputVector.Name = "txtBoxOutputVector";
+            this.txtBoxOutputVector.ReadOnly = true;
+            this.txtBoxOutputVector.Size = new System.Drawing.Size(241, 20);
+            this.txtBoxOutputVector.TabIndex = 7;
+            this.txtBoxOutputVector.TabStop = false;
             // 
             // labelOutputVector
             // 
@@ -205,25 +214,25 @@
             this.labelOutputVector.TabIndex = 6;
             this.labelOutputVector.Text = "Output vector:";
             // 
-            // buttonTest
+            // btnTest
             // 
-            this.buttonTest.Location = new System.Drawing.Point(436, 44);
-            this.buttonTest.Name = "buttonTest";
-            this.buttonTest.Size = new System.Drawing.Size(75, 23);
-            this.buttonTest.TabIndex = 6;
-            this.buttonTest.Text = "Test";
-            this.buttonTest.UseVisualStyleBackColor = true;
-            this.buttonTest.Click += new System.EventHandler(this.buttonTest_Click);
+            this.btnTest.Location = new System.Drawing.Point(436, 44);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(75, 23);
+            this.btnTest.TabIndex = 6;
+            this.btnTest.Text = "Test";
+            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.buttonTest_Click);
             // 
-            // textBoxPatternVector
+            // txtBoxPatternVector
             // 
-            this.textBoxPatternVector.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxPatternVector.Location = new System.Drawing.Point(189, 47);
-            this.textBoxPatternVector.Name = "textBoxPatternVector";
-            this.textBoxPatternVector.ReadOnly = true;
-            this.textBoxPatternVector.Size = new System.Drawing.Size(241, 20);
-            this.textBoxPatternVector.TabIndex = 40;
-            this.textBoxPatternVector.TabStop = false;
+            this.txtBoxPatternVector.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBoxPatternVector.Location = new System.Drawing.Point(189, 47);
+            this.txtBoxPatternVector.Name = "txtBoxPatternVector";
+            this.txtBoxPatternVector.ReadOnly = true;
+            this.txtBoxPatternVector.Size = new System.Drawing.Size(241, 20);
+            this.txtBoxPatternVector.TabIndex = 40;
+            this.txtBoxPatternVector.TabStop = false;
             // 
             // labelPatternVector
             // 
@@ -236,7 +245,7 @@
             // 
             // groupBoxPattern
             // 
-            this.groupBoxPattern.Controls.Add(this.buttonClear);
+            this.groupBoxPattern.Controls.Add(this.btnClear);
             this.groupBoxPattern.Controls.Add(this.chBox15);
             this.groupBoxPattern.Controls.Add(this.chBox14);
             this.groupBoxPattern.Controls.Add(this.chBox13);
@@ -259,15 +268,15 @@
             this.groupBoxPattern.TabStop = false;
             this.groupBoxPattern.Text = "Pattern:";
             // 
-            // buttonClear
+            // btnClear
             // 
-            this.buttonClear.Location = new System.Drawing.Point(6, 111);
-            this.buttonClear.Name = "buttonClear";
-            this.buttonClear.Size = new System.Drawing.Size(54, 23);
-            this.buttonClear.TabIndex = 5;
-            this.buttonClear.Text = "Clear";
-            this.buttonClear.UseVisualStyleBackColor = true;
-            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
+            this.btnClear.Location = new System.Drawing.Point(6, 111);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(54, 23);
+            this.btnClear.TabIndex = 5;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
             // chBox15
             // 
@@ -467,15 +476,6 @@
             this.statusStripInfo.Name = "statusStripInfo";
             this.statusStripInfo.Size = new System.Drawing.Size(0, 17);
             // 
-            // labelPlease
-            // 
-            this.labelPlease.AutoSize = true;
-            this.labelPlease.Location = new System.Drawing.Point(65, 79);
-            this.labelPlease.Name = "labelPlease";
-            this.labelPlease.Size = new System.Drawing.Size(305, 13);
-            this.labelPlease.TabIndex = 12;
-            this.labelPlease.Text = "(Please select file with only three vectors with space separator.)";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -508,13 +508,13 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowser;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBoxTeach;
-        private System.Windows.Forms.Button buttonSelect;
+        private System.Windows.Forms.Button btnSelect;
         private System.Windows.Forms.Label labelFolder;
-        private System.Windows.Forms.TextBox textBoxFolder;
+        private System.Windows.Forms.TextBox txtBoxFolder;
         private System.Windows.Forms.GroupBox groupBoxTest;
-        private System.Windows.Forms.Button buttonTeach;
-        private System.Windows.Forms.Button buttonRefresh;
-        private System.Windows.Forms.ComboBox comboBoxFiles;
+        private System.Windows.Forms.Button btnTeach;
+        private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.ComboBox cmbBoxFiles;
         private System.Windows.Forms.Label labelFile;
         private System.Windows.Forms.GroupBox groupBoxPattern;
         private System.Windows.Forms.CheckBox chBox06;
@@ -535,11 +535,11 @@
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel statusStripInfo;
         private System.Windows.Forms.Label labelPatternVector;
-        private System.Windows.Forms.TextBox textBoxPatternVector;
-        private System.Windows.Forms.TextBox textBoxOutputVector;
+        private System.Windows.Forms.TextBox txtBoxPatternVector;
+        private System.Windows.Forms.TextBox txtBoxOutputVector;
         private System.Windows.Forms.Label labelOutputVector;
-        private System.Windows.Forms.Button buttonTest;
-        private System.Windows.Forms.Button buttonClear;
+        private System.Windows.Forms.Button btnTest;
+        private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Label labelPlease;
     }
 }

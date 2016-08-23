@@ -31,13 +31,13 @@ namespace HopfieldNetworkClient
 
         private void buttonRefresh_Click(object sender, EventArgs e)
         {
-            AddItemsToComboBox(comboBoxFiles, GetFileNamesFromFolder());
+            AddItemsToComboBox(cmbBoxFiles, GetFileNamesFromFolder());
             SetStatusStrip(Color.LightBlue, "");
         }
 
         private void buttonTeach_Click(object sender, EventArgs e)
         {
-            if (comboBoxFiles.SelectedItem == null)
+            if (cmbBoxFiles.SelectedItem == null)
             {
                 SetStatusStrip(Color.Red, Resources.statusStripInfo_SelectDataError);
                 return;
@@ -45,7 +45,7 @@ namespace HopfieldNetworkClient
 
             try
             {
-                var datafilePath = $"{folderBrowser.SelectedPath}\\{comboBoxFiles.SelectedItem}";
+                var datafilePath = $"{folderBrowser.SelectedPath}\\{cmbBoxFiles.SelectedItem}";
                 var separator = ' ';
                 _hopfieldNetwork.TeachWithHebbsRule(datafilePath, separator);
             }
@@ -56,7 +56,7 @@ namespace HopfieldNetworkClient
             }
 
             SetStatusStrip(Color.Green, "Teaching done");
-            buttonTest.Enabled = true;
+            btnTest.Enabled = true;
         }
 
         private void chBox_CheckedChanged(object sender, EventArgs e)
@@ -68,12 +68,12 @@ namespace HopfieldNetworkClient
                 chBox.CheckState = chBox.Checked ? CheckState.Indeterminate : CheckState.Unchecked;
             }
 
-            FillTextBoxByData(textBoxPatternVector, GetVectorFromPattern());
+            FillTextBoxByData(txtBoxPatternVector, GetVectorFromPattern());
         }
 
         private void buttonClear_Click(object sender, EventArgs e)
         {
-            FillTextBoxByData(textBoxPatternVector, _clearedData);
+            FillTextBoxByData(txtBoxPatternVector, _clearedData);
             var checkBoxes = GetPatternCheckBoxes();
 
             foreach (var checkBox in checkBoxes)
@@ -97,7 +97,7 @@ namespace HopfieldNetworkClient
                 return;
             }
 
-            FillTextBoxByData(textBoxOutputVector, outputVector.Data);
+            FillTextBoxByData(txtBoxOutputVector, outputVector.Data);
             FillPatternByOutput(outputVector);
 
             SetStatusStrip(Color.LightBlue, "");
@@ -107,9 +107,9 @@ namespace HopfieldNetworkClient
         {
             folderBrowser.SelectedPath = Application.StartupPath;
             SetDataPathAndFileComboBox();
-            FillTextBoxByData(textBoxPatternVector, _clearedData);
-            ActiveControl = buttonSelect;
-            buttonTest.Enabled = false;
+            FillTextBoxByData(txtBoxPatternVector, _clearedData);
+            ActiveControl = btnSelect;
+            btnTest.Enabled = false;
         }
 
         private void ChooseFolder()
@@ -122,8 +122,8 @@ namespace HopfieldNetworkClient
 
         private void SetDataPathAndFileComboBox()
         {
-            textBoxFolder.Text = folderBrowser.SelectedPath;
-            AddItemsToComboBox(comboBoxFiles, GetFileNamesFromFolder());
+            txtBoxFolder.Text = folderBrowser.SelectedPath;
+            AddItemsToComboBox(cmbBoxFiles, GetFileNamesFromFolder());
         }
 
         private void AddItemsToComboBox(ComboBox comboBox, object[] itemsToAdd)
@@ -134,7 +134,7 @@ namespace HopfieldNetworkClient
 
         private object[] GetFileNamesFromFolder()
         {
-            var dirInfo = new DirectoryInfo(textBoxFolder.Text);
+            var dirInfo = new DirectoryInfo(txtBoxFolder.Text);
             var filesInfo = dirInfo.GetFiles("*.txt");
             var filesNames = new object[filesInfo.Length];
 

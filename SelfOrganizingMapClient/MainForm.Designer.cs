@@ -29,29 +29,29 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.picBoxMap = new System.Windows.Forms.PictureBox();
             this.labelAuthor = new System.Windows.Forms.Label();
             this.timer = new System.Windows.Forms.Timer(this.components);
-            this.buttonStartPause = new System.Windows.Forms.Button();
-            this.numericNeurons = new System.Windows.Forms.NumericUpDown();
+            this.btnStartPause = new System.Windows.Forms.Button();
+            this.numNeurons = new System.Windows.Forms.NumericUpDown();
             this.labelNeurons = new System.Windows.Forms.Label();
-            this.buttonGenerate = new System.Windows.Forms.Button();
-            this.buttonStop = new System.Windows.Forms.Button();
+            this.btnGenerate = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
             this.labelIteration = new System.Windows.Forms.Label();
-            this.labelIterationInfo = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericNeurons)).BeginInit();
+            this.lblIterationInfo = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxMap)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numNeurons)).BeginInit();
             this.SuspendLayout();
             // 
-            // pictureBox
+            // picBoxMap
             // 
-            this.pictureBox.BackColor = System.Drawing.Color.White;
-            this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox.Location = new System.Drawing.Point(12, 12);
-            this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(500, 500);
-            this.pictureBox.TabIndex = 0;
-            this.pictureBox.TabStop = false;
+            this.picBoxMap.BackColor = System.Drawing.Color.White;
+            this.picBoxMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picBoxMap.Location = new System.Drawing.Point(12, 12);
+            this.picBoxMap.Name = "picBoxMap";
+            this.picBoxMap.Size = new System.Drawing.Size(500, 500);
+            this.picBoxMap.TabIndex = 0;
+            this.picBoxMap.TabStop = false;
             // 
             // labelAuthor
             // 
@@ -67,40 +67,40 @@
             this.timer.Interval = 1;
             this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
-            // buttonStartPause
+            // btnStartPause
             // 
-            this.buttonStartPause.Enabled = false;
-            this.buttonStartPause.Location = new System.Drawing.Point(521, 117);
-            this.buttonStartPause.Name = "buttonStartPause";
-            this.buttonStartPause.Size = new System.Drawing.Size(75, 23);
-            this.buttonStartPause.TabIndex = 1;
-            this.buttonStartPause.Text = "Start";
-            this.buttonStartPause.UseVisualStyleBackColor = true;
-            this.buttonStartPause.Click += new System.EventHandler(this.buttonStartPause_Click);
+            this.btnStartPause.Enabled = false;
+            this.btnStartPause.Location = new System.Drawing.Point(521, 117);
+            this.btnStartPause.Name = "btnStartPause";
+            this.btnStartPause.Size = new System.Drawing.Size(75, 23);
+            this.btnStartPause.TabIndex = 1;
+            this.btnStartPause.Text = "Start";
+            this.btnStartPause.UseVisualStyleBackColor = true;
+            this.btnStartPause.Click += new System.EventHandler(this.buttonStartPause_Click);
             // 
-            // numericNeurons
+            // numNeurons
             // 
-            this.numericNeurons.Increment = new decimal(new int[] {
+            this.numNeurons.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.numericNeurons.Location = new System.Drawing.Point(577, 26);
-            this.numericNeurons.Maximum = new decimal(new int[] {
+            this.numNeurons.Location = new System.Drawing.Point(577, 26);
+            this.numNeurons.Maximum = new decimal(new int[] {
             60,
             0,
             0,
             0});
-            this.numericNeurons.Minimum = new decimal(new int[] {
+            this.numNeurons.Minimum = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.numericNeurons.Name = "numericNeurons";
-            this.numericNeurons.Size = new System.Drawing.Size(97, 20);
-            this.numericNeurons.TabIndex = 0;
-            this.numericNeurons.TabStop = false;
-            this.numericNeurons.Value = new decimal(new int[] {
+            this.numNeurons.Name = "numNeurons";
+            this.numNeurons.Size = new System.Drawing.Size(97, 20);
+            this.numNeurons.TabIndex = 0;
+            this.numNeurons.TabStop = false;
+            this.numNeurons.Value = new decimal(new int[] {
             30,
             0,
             0,
@@ -115,26 +115,26 @@
             this.labelNeurons.TabIndex = 3;
             this.labelNeurons.Text = "Neurons:";
             // 
-            // buttonGenerate
+            // btnGenerate
             // 
-            this.buttonGenerate.Location = new System.Drawing.Point(521, 88);
-            this.buttonGenerate.Name = "buttonGenerate";
-            this.buttonGenerate.Size = new System.Drawing.Size(153, 23);
-            this.buttonGenerate.TabIndex = 0;
-            this.buttonGenerate.Text = "Generate";
-            this.buttonGenerate.UseVisualStyleBackColor = true;
-            this.buttonGenerate.Click += new System.EventHandler(this.buttonGenerate_Click);
+            this.btnGenerate.Location = new System.Drawing.Point(521, 88);
+            this.btnGenerate.Name = "btnGenerate";
+            this.btnGenerate.Size = new System.Drawing.Size(153, 23);
+            this.btnGenerate.TabIndex = 0;
+            this.btnGenerate.Text = "Generate";
+            this.btnGenerate.UseVisualStyleBackColor = true;
+            this.btnGenerate.Click += new System.EventHandler(this.buttonGenerate_Click);
             // 
-            // buttonStop
+            // btnStop
             // 
-            this.buttonStop.Enabled = false;
-            this.buttonStop.Location = new System.Drawing.Point(599, 117);
-            this.buttonStop.Name = "buttonStop";
-            this.buttonStop.Size = new System.Drawing.Size(75, 23);
-            this.buttonStop.TabIndex = 2;
-            this.buttonStop.Text = "Stop";
-            this.buttonStop.UseVisualStyleBackColor = true;
-            this.buttonStop.Click += new System.EventHandler(this.buttonStop_Click);
+            this.btnStop.Enabled = false;
+            this.btnStop.Location = new System.Drawing.Point(599, 117);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(75, 23);
+            this.btnStop.TabIndex = 2;
+            this.btnStop.Text = "Stop";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.buttonStop_Click);
             // 
             // labelIteration
             // 
@@ -145,35 +145,35 @@
             this.labelIteration.TabIndex = 5;
             this.labelIteration.Text = "Iteration:";
             // 
-            // labelIterationInfo
+            // lblIterationInfo
             // 
-            this.labelIterationInfo.AutoSize = true;
-            this.labelIterationInfo.Location = new System.Drawing.Point(574, 54);
-            this.labelIterationInfo.Name = "labelIterationInfo";
-            this.labelIterationInfo.Size = new System.Drawing.Size(42, 13);
-            this.labelIterationInfo.TabIndex = 6;
-            this.labelIterationInfo.Text = "1/3000";
+            this.lblIterationInfo.AutoSize = true;
+            this.lblIterationInfo.Location = new System.Drawing.Point(574, 54);
+            this.lblIterationInfo.Name = "lblIterationInfo";
+            this.lblIterationInfo.Size = new System.Drawing.Size(42, 13);
+            this.lblIterationInfo.TabIndex = 6;
+            this.lblIterationInfo.Text = "1/3000";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(686, 523);
-            this.Controls.Add(this.labelIterationInfo);
+            this.Controls.Add(this.lblIterationInfo);
             this.Controls.Add(this.labelIteration);
-            this.Controls.Add(this.buttonStop);
-            this.Controls.Add(this.buttonGenerate);
+            this.Controls.Add(this.btnStop);
+            this.Controls.Add(this.btnGenerate);
             this.Controls.Add(this.labelNeurons);
-            this.Controls.Add(this.numericNeurons);
-            this.Controls.Add(this.buttonStartPause);
+            this.Controls.Add(this.numNeurons);
+            this.Controls.Add(this.btnStartPause);
             this.Controls.Add(this.labelAuthor);
-            this.Controls.Add(this.pictureBox);
+            this.Controls.Add(this.picBoxMap);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Self-Organizing Map";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericNeurons)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxMap)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numNeurons)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -181,16 +181,16 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox;
+        private System.Windows.Forms.PictureBox picBoxMap;
         private System.Windows.Forms.Label labelAuthor;
         private System.Windows.Forms.Timer timer;
-        private System.Windows.Forms.Button buttonStartPause;
-        private System.Windows.Forms.NumericUpDown numericNeurons;
+        private System.Windows.Forms.Button btnStartPause;
+        private System.Windows.Forms.NumericUpDown numNeurons;
         private System.Windows.Forms.Label labelNeurons;
-        private System.Windows.Forms.Button buttonGenerate;
-        private System.Windows.Forms.Button buttonStop;
+        private System.Windows.Forms.Button btnGenerate;
+        private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Label labelIteration;
-        private System.Windows.Forms.Label labelIterationInfo;
+        private System.Windows.Forms.Label lblIterationInfo;
     }
 }
 

@@ -37,8 +37,8 @@ namespace SelfOrganizingMapClient
         private void buttonGenerate_Click(object sender, EventArgs e)
         {
             _simulationState = SimulationState.New;
-            buttonStartPause.Enabled = true;
-            buttonStop.Enabled = false;
+            btnStartPause.Enabled = true;
+            btnStop.Enabled = false;
 
             ReadControlsValues();
             UpdateIterationInfo();
@@ -54,10 +54,10 @@ namespace SelfOrganizingMapClient
             switch (_simulationState)
             {
                 case SimulationState.New:
-                    buttonStartPause.Text = Resources.buttonText_Pause;
-                    buttonGenerate.Enabled = false;
-                    buttonStop.Enabled = true;
-                    numericNeurons.Enabled = false;
+                    btnStartPause.Text = Resources.buttonText_Pause;
+                    btnGenerate.Enabled = false;
+                    btnStop.Enabled = true;
+                    numNeurons.Enabled = false;
 
                     timer.Enabled = true;
                     timer.Start();
@@ -65,14 +65,14 @@ namespace SelfOrganizingMapClient
                     _simulationState = SimulationState.Started;
                     break;
                 case SimulationState.Started:
-                    buttonStartPause.Text = Resources.buttonText_Resume;
+                    btnStartPause.Text = Resources.buttonText_Resume;
 
                     timer.Stop();
 
                     _simulationState = SimulationState.Paused;
                     break;
                 case SimulationState.Paused:
-                    buttonStartPause.Text = Resources.buttonText_Pause;
+                    btnStartPause.Text = Resources.buttonText_Pause;
 
                     timer.Start();
 
@@ -86,10 +86,10 @@ namespace SelfOrganizingMapClient
             timer.Stop();
             timer.Enabled = false;
 
-            buttonStartPause.Text = Resources.buttonText_Start;
-            buttonStartPause.Enabled = false;
-            buttonGenerate.Enabled = true;
-            numericNeurons.Enabled = true;
+            btnStartPause.Text = Resources.buttonText_Start;
+            btnStartPause.Enabled = false;
+            btnGenerate.Enabled = true;
+            numNeurons.Enabled = true;
         }
 
         private void timer_Tick(object sender, EventArgs e)
@@ -123,9 +123,9 @@ namespace SelfOrganizingMapClient
             }
             else
             {
-                buttonGenerate.Enabled = true;
-                buttonStartPause.Enabled = false;
-                buttonStop.Enabled = false;
+                btnGenerate.Enabled = true;
+                btnStartPause.Enabled = false;
+                btnStop.Enabled = false;
                 timer.Stop();
             }
         }
@@ -133,23 +133,23 @@ namespace SelfOrganizingMapClient
 
         private void InitializeControls()
         {
-            _areaSize = pictureBox.Width;
+            _areaSize = picBoxMap.Width;
             _mapRadius = _areaSize / 2;
 
             ReadControlsValues();
             UpdateIterationInfo();
 
-            pictureBox.Image = new Bitmap(pictureBox.Width, pictureBox.Height);
-            _drawer = new Drawer(pictureBox.Image);
+            picBoxMap.Image = new Bitmap(picBoxMap.Width, picBoxMap.Height);
+            _drawer = new Drawer(picBoxMap.Image);
             _randomizer = new Randomizer();
-            _triangle = InitializeTriangle(pictureBox.Width);
+            _triangle = InitializeTriangle(picBoxMap.Width);
 
             _drawer.DrawTriangle(_triangle, Color.Black);
         }
 
         private void ReadControlsValues()
         {
-            _neuronsCount = Convert.ToInt32(numericNeurons.Value);
+            _neuronsCount = Convert.ToInt32(numNeurons.Value);
             _maxIterations = _neuronsCount * 100;
             _timeConst = _maxIterations / Math.Log(_mapRadius);
 
@@ -189,7 +189,7 @@ namespace SelfOrganizingMapClient
 
         private void UpdateIterationInfo()
         {
-            labelIterationInfo.Text = $"{_iteration}/{_maxIterations}";
+            lblIterationInfo.Text = $"{_iteration}/{_maxIterations}";
         }
 
         private Triangle InitializeTriangle(int squareSize)
@@ -201,7 +201,7 @@ namespace SelfOrganizingMapClient
 
         private void RefreshArea()
         {
-            pictureBox.Refresh();
+            picBoxMap.Refresh();
         }
 
         private enum SimulationState
