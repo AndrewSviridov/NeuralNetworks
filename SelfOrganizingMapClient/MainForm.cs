@@ -28,6 +28,13 @@ namespace SelfOrganizingMapClient
 
         private int _neighborRadius;
 
+        private enum SimulationState
+        {
+            New,
+            Started,
+            Paused
+        }
+
         public MainForm()
         {
             InitializeComponent();
@@ -202,13 +209,6 @@ namespace SelfOrganizingMapClient
         private void RefreshArea()
         {
             picBoxMap.Refresh();
-        }
-
-        private enum SimulationState
-        {
-            New,
-            Started,
-            Paused
         }
     }
 }
