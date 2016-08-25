@@ -93,8 +93,11 @@
       <Name>NeuralNetworks</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Data\" />
+    <Content Include="Data\1-2-7.txt" />
+    <Content Include="Data\1-4-6.txt" />
+    <Content Include="Data\1-4-7.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
