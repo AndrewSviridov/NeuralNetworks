@@ -1,6 +1,6 @@
 ﻿namespace NeuralNetworks.Utility
 {
-    public class Enums
+    public static class Enums
     {
         public enum DataType
         {

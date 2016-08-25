@@ -48,9 +48,14 @@
     <Compile Include="Models\BamModel.cs" />
     <Compile Include="Models\BcmModel.cs" />
     <Compile Include="Models\HopfieldNetwork.cs" />
+    <Compile Include="Models\MultiLayerPerceptron.cs" />
     <Compile Include="Models\SelfOrganizingMap.cs" />
     <Compile Include="Models\SingleLayerPerceptron.cs" />
+    <Compile Include="Utility\Functions.cs" />
+    <Compile Include="MultiLayerPerceptronHelpers\Layer.cs" />
+    <Compile Include="MultiLayerPerceptronHelpers\Neuron.cs" />
     <Compile Include="SelfOrganizingMapHelpers\Node.cs" />
+    <Compile Include="Utility\Delegates.cs" />
     <Compile Include="Utility\Enums.cs" />
     <Compile Include="Utility\NeuralVector.cs" />
     <Compile Include="Utility\DataReader.cs" />
