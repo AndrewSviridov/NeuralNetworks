@@ -61,6 +61,7 @@
     <Compile Include="Utility\DataReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SingleLayerPerceptronHelpers\Pocket.cs" />
+    <Compile Include="EventsArgs\ProgressEventArgs.cs" />
     <Compile Include="Utility\Randomizer.cs" />
   </ItemGroup>
   <ItemGroup>

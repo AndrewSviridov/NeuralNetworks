@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MathNet.Numerics.LinearAlgebra;
+using NeuralNetworks.EventsArgs;
 using NeuralNetworks.MultiLayerPerceptronHelpers;
 using NeuralNetworks.Utility;
 
@@ -8,10 +10,11 @@ namespace NeuralNetworks.Models
 {
     public class MultiLayerPerceptron
     {
-        private Randomizer _randomizer;
-        private List<Layer> _layers;
-        private DataReader _dataReader;
+        private readonly Randomizer _randomizer;
+        private readonly List<Layer> _layers;
+        private readonly DataReader _dataReader;
         private bool _abortTeaching;
+        private const double _bias = 1.0;
 
         private Delegates.DerivativeFunction _derivativeFunction;
 
@@ -41,24 +44,33 @@ namespace NeuralNetworks.Models
             }
         }
 
-        public void Teach(string datafilePath, char separator, char decimalPoint, int iterations, int learningRate)
+        public void Teach(string datafilePath, char separator, char decimalPoint, int iterations, double learningRate)
         {
             _abortTeaching = false;
             var outputs = new List<Vector<double>>();
+            var teachingPercentsProgress = 0;
 
             var inputVectors = _dataReader.ReadPerceptronDataFromTextFile(datafilePath, separator, decimalPoint);
 
             for (int iteration = 0; iteration < iterations; iteration++)
             {
                 var selectedVector = _randomizer.SelectRandomVector(inputVectors);
+                var selectedVectorWithBias = AddBiasToInputDataVector(selectedVector.Data);
                 var expectedClass = selectedVector.Class;
 
                 outputs.Clear();
-                outputs.Add(selectedVector.Data);
+                outputs.Add(selectedVectorWithBias);
 
                 CalculateOutputs(outputs);
 
                 DoErrorsBackwardPropagation(outputs, learningRate, expectedClass);
+
+                var progressMod = iterations / 100;
+                if (iteration % progressMod == 0)
+                {
+                    teachingPercentsProgress++;
+                    OnTeachingProgressChanged(teachingPercentsProgress);
+                }
 
                 if (_abortTeaching)
                 {
@@ -67,14 +79,21 @@ namespace NeuralNetworks.Models
             }
         }
 
-        private void DoErrorsBackwardPropagation(List<Vector<double>> outputs, int learningRate, int expectedClass)
+        private Vector<double> AddBiasToInputDataVector(Vector<double> inputVector)
+        {
+            var list = inputVector.ToList();
+            list.Insert(0, _bias);
+            return Vector<double>.Build.DenseOfEnumerable(list);
+        }
+
+        private void DoErrorsBackwardPropagation(List<Vector<double>> outputs, double learningRate, int expectedClass)
         {
             PropagateLastLayer(outputs, expectedClass);
             PropagateHiddenLayers(outputs);
             AdjustWeights(outputs, learningRate);
         }
 
-        private void AdjustWeights(List<Vector<double>> outputs, int learningRate)
+        private void AdjustWeights(List<Vector<double>> outputs, double learningRate)
         {
             var offset = 1;
 
@@ -86,8 +105,12 @@ namespace NeuralNetworks.Models
                 {
                     var neuron = _layers[layerId].Neurons[neuronId];
 
-                    neuron.Weights += learningRate * neuron.RoFactor * outputs[layerId];
-                    neuron.BiasWeight += learningRate * neuron.RoFactor * neuron.Bias;
+                    for (int connectedNeuronId = 0; connectedNeuronId < neuron.Weights.Count; connectedNeuronId++)
+                    {
+                        neuron.Weights[connectedNeuronId] += learningRate * neuron.RoFactor * outputs[layerId][connectedNeuronId];
+                    }
+
+                    neuron.BiasWeight = neuron.BiasWeight + learningRate * neuron.RoFactor * neuron.Bias;
                 }
             }
         }
@@ -107,7 +130,7 @@ namespace NeuralNetworks.Models
                 {
                     const int nextLayerOffset = 1;
                     double partOfRoFactor = 0.0;
-                    var derivative = CalculateDerivative(outputs[layerId][neuronId]);
+                    var derivative = CalculateDerivative(outputs[layerId + nextLayerOffset][neuronId]);
 
                     foreach (var connectedNeuron in _layers[layerId + nextLayerOffset].Neurons)
                     {
@@ -157,6 +180,43 @@ namespace NeuralNetworks.Models
         public void AbortTeaching()
         {
             _abortTeaching = true;
+        }
+
+        public event Delegates.TeachingProgressChangedEventHandler TeachingProgressChanged;
+        protected virtual void OnTeachingProgressChanged(int progress)
+        {
+            TeachingProgressChanged?.Invoke(this, new ProgressEventArgs(progress));
+        }
+
+        public void ResetWeights()
+        {
+            foreach (var layer in _layers)
+            {
+                foreach (var neuron in layer.Neurons)
+                {
+                    neuron.RoFactor = 0.0;
+                    neuron.Weights = _randomizer.RandomizeWeights(neuron.Weights.Count);
+                    neuron.BiasWeight = _randomizer.RandomizeBias();
+                }
+            }
+        }
+
+        public List<Tuple<double, double>> Test(string datafilePath, char separator, char decimalPoint)
+        {
+            var testingData = _dataReader.ReadPerceptronDataFromTextFile(datafilePath, separator, decimalPoint);
+            var resultOutputs = new List<Tuple<double, double>>();
+
+            foreach (var neuralVector in testingData)
+            {
+                var testingInputWithBias = AddBiasToInputDataVector(neuralVector.Data);
+                var testingOutputs = new List<Vector<double>> { testingInputWithBias };
+                CalculateOutputs(testingOutputs);
+                var expectedOutput = neuralVector.Class;
+                var calculatedOutput = testingOutputs.Last().Last();
+                resultOutputs.Add(new Tuple<double, double>(expectedOutput, calculatedOutput));
+            }
+
+            return resultOutputs;
         }
     }
 }

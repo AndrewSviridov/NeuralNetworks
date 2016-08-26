@@ -10,8 +10,7 @@ namespace NeuralNetworks.MultiLayerPerceptronHelpers
         public double BiasWeight { get; set; }
         public double RoFactor { get; set; }
 
-        private readonly double _bias;
-        private Delegates.ActivationFunction _activationFunction;
+        private readonly Delegates.ActivationFunction _activationFunction;
 
         public Neuron(Vector<double> initialWeights, double bias, double initialBiasWeight, Delegates.ActivationFunction activationFunction)
         {
@@ -28,7 +27,7 @@ namespace NeuralNetworks.MultiLayerPerceptronHelpers
 
         private double AggregateFunction(Vector<double> inputDataVector)
         {
-            return inputDataVector * Weights + _bias * BiasWeight;
+            return inputDataVector * Weights + Bias * BiasWeight;
         }
     }
 }
