@@ -55,7 +55,7 @@ namespace HopfieldNetworkClient
                 return;
             }
 
-            SetStatusStrip(Color.Green, "Teaching done");
+            SetStatusStrip(Color.Green, Resources.statusStripInfo_TeachingDone);
             btnTest.Enabled = true;
         }
 
