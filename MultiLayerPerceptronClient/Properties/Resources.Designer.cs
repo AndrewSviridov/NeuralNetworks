@@ -97,11 +97,65 @@ namespace MultiLayerPerceptronClient.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Network created..
+        /// </summary>
+        internal static string MainForm_statusStripInfo_Network_created {
+            get {
+                return ResourceManager.GetString("MainForm_statusStripInfo_Network_created", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select data file to learn!.
         /// </summary>
         internal static string MainForm_statusStripInfo_Select_data_file_to_learn {
             get {
                 return ResourceManager.GetString("MainForm_statusStripInfo_Select_data_file_to_learn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select data file to test!.
+        /// </summary>
+        internal static string MainForm_statusStripInfo_Select_data_file_to_test {
+            get {
+                return ResourceManager.GetString("MainForm_statusStripInfo_Select_data_file_to_test", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teaching aborted..
+        /// </summary>
+        internal static string MainForm_statusStripInfo_Teaching_aborted {
+            get {
+                return ResourceManager.GetString("MainForm_statusStripInfo_Teaching_aborted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teaching done..
+        /// </summary>
+        internal static string MainForm_statusStripInfo_Teaching_done {
+            get {
+                return ResourceManager.GetString("MainForm_statusStripInfo_Teaching_done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Testing done, check results..
+        /// </summary>
+        internal static string MainForm_statusStripInfo_Testing_done_check_results {
+            get {
+                return ResourceManager.GetString("MainForm_statusStripInfo_Testing_done_check_results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weights were reset..
+        /// </summary>
+        internal static string MainForm_statusStripInfo_Weights_were_reset {
+            get {
+                return ResourceManager.GetString("MainForm_statusStripInfo_Weights_were_reset", resourceCulture);
             }
         }
     }

@@ -48,6 +48,7 @@
             this.lblNumInputs = new System.Windows.Forms.Label();
             this.lblNumNeurons = new System.Windows.Forms.Label();
             this.grpBoxTeach = new System.Windows.Forms.GroupBox();
+            this.btnResetWeights = new System.Windows.Forms.Button();
             this.progBarTeaching = new System.Windows.Forms.ProgressBar();
             this.btnTeachAbort = new System.Windows.Forms.Button();
             this.numLearningRate = new System.Windows.Forms.NumericUpDown();
@@ -69,7 +70,10 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtBoxExpected = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtBoxCalculated = new System.Windows.Forms.TextBox();
             this.bgWorker = new System.ComponentModel.BackgroundWorker();
             this.grpBoxConfiguration.SuspendLayout();
             this.grpBoxLayers.SuspendLayout();
@@ -347,6 +351,7 @@
             // 
             // grpBoxTeach
             // 
+            this.grpBoxTeach.Controls.Add(this.btnResetWeights);
             this.grpBoxTeach.Controls.Add(this.progBarTeaching);
             this.grpBoxTeach.Controls.Add(this.btnTeachAbort);
             this.grpBoxTeach.Controls.Add(this.numLearningRate);
@@ -362,21 +367,32 @@
             this.grpBoxTeach.Enabled = false;
             this.grpBoxTeach.Location = new System.Drawing.Point(12, 204);
             this.grpBoxTeach.Name = "grpBoxTeach";
-            this.grpBoxTeach.Size = new System.Drawing.Size(415, 160);
+            this.grpBoxTeach.Size = new System.Drawing.Size(415, 173);
             this.grpBoxTeach.TabIndex = 1;
             this.grpBoxTeach.TabStop = false;
             this.grpBoxTeach.Text = "Teach";
             // 
+            // btnResetWeights
+            // 
+            this.btnResetWeights.Enabled = false;
+            this.btnResetWeights.Location = new System.Drawing.Point(240, 76);
+            this.btnResetWeights.Name = "btnResetWeights";
+            this.btnResetWeights.Size = new System.Drawing.Size(169, 23);
+            this.btnResetWeights.TabIndex = 20;
+            this.btnResetWeights.Text = "Reset weights";
+            this.btnResetWeights.UseVisualStyleBackColor = true;
+            this.btnResetWeights.Click += new System.EventHandler(this.btnResetWeights_Click);
+            // 
             // progBarTeaching
             // 
-            this.progBarTeaching.Location = new System.Drawing.Point(6, 126);
+            this.progBarTeaching.Location = new System.Drawing.Point(9, 141);
             this.progBarTeaching.Name = "progBarTeaching";
             this.progBarTeaching.Size = new System.Drawing.Size(403, 23);
             this.progBarTeaching.TabIndex = 17;
             // 
             // btnTeachAbort
             // 
-            this.btnTeachAbort.Location = new System.Drawing.Point(240, 92);
+            this.btnTeachAbort.Location = new System.Drawing.Point(240, 107);
             this.btnTeachAbort.Name = "btnTeachAbort";
             this.btnTeachAbort.Size = new System.Drawing.Size(169, 28);
             this.btnTeachAbort.TabIndex = 17;
@@ -392,9 +408,9 @@
             0,
             0,
             65536});
-            this.numLearningRate.Location = new System.Drawing.Point(113, 98);
+            this.numLearningRate.Location = new System.Drawing.Point(113, 113);
             this.numLearningRate.Maximum = new decimal(new int[] {
-            10,
+            2,
             0,
             0,
             0});
@@ -416,7 +432,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(35, 100);
+            this.label11.Location = new System.Drawing.Point(35, 115);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(72, 13);
             this.label11.TabIndex = 18;
@@ -429,7 +445,7 @@
             0,
             0,
             0});
-            this.numIterations.Location = new System.Drawing.Point(113, 72);
+            this.numIterations.Location = new System.Drawing.Point(113, 79);
             this.numIterations.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -454,7 +470,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(6, 74);
+            this.label10.Location = new System.Drawing.Point(6, 81);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(101, 13);
             this.label10.TabIndex = 15;
@@ -529,9 +545,9 @@
             this.statusStrip.GripMargin = new System.Windows.Forms.Padding(0);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusStripInfo});
-            this.statusStrip.Location = new System.Drawing.Point(0, 467);
+            this.statusStrip.Location = new System.Drawing.Point(0, 477);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(612, 22);
+            this.statusStrip.Size = new System.Drawing.Size(666, 22);
             this.statusStrip.SizingGrip = false;
             this.statusStrip.Stretch = false;
             this.statusStrip.TabIndex = 12;
@@ -540,7 +556,7 @@
             // 
             this.statusStripInfo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.statusStripInfo.Name = "statusStripInfo";
-            this.statusStripInfo.Size = new System.Drawing.Size(0, 27);
+            this.statusStripInfo.Size = new System.Drawing.Size(0, 17);
             // 
             // grpBoxTest
             // 
@@ -548,7 +564,7 @@
             this.grpBoxTest.Controls.Add(this.cmbBoxTestingFiles);
             this.grpBoxTest.Controls.Add(this.label12);
             this.grpBoxTest.Enabled = false;
-            this.grpBoxTest.Location = new System.Drawing.Point(12, 370);
+            this.grpBoxTest.Location = new System.Drawing.Point(12, 383);
             this.grpBoxTest.Name = "grpBoxTest";
             this.grpBoxTest.Size = new System.Drawing.Size(415, 56);
             this.grpBoxTest.TabIndex = 13;
@@ -563,6 +579,7 @@
             this.btnTest.TabIndex = 20;
             this.btnTest.Text = "Test";
             this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
             // cmbBoxTestingFiles
             // 
@@ -586,7 +603,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.BackColor = System.Drawing.Color.Transparent;
-            this.label13.Location = new System.Drawing.Point(437, 429);
+            this.label13.Location = new System.Drawing.Point(494, 442);
             this.label13.Margin = new System.Windows.Forms.Padding(0);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(158, 13);
@@ -595,26 +612,58 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.textBox1);
+            this.groupBox3.Controls.Add(this.label2);
+            this.groupBox3.Controls.Add(this.txtBoxExpected);
+            this.groupBox3.Controls.Add(this.label1);
+            this.groupBox3.Controls.Add(this.txtBoxCalculated);
             this.groupBox3.Location = new System.Drawing.Point(433, 12);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(167, 414);
+            this.groupBox3.Size = new System.Drawing.Size(225, 427);
             this.groupBox3.TabIndex = 15;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Results";
             // 
-            // textBox1
+            // label2
             // 
-            this.textBox1.Location = new System.Drawing.Point(7, 20);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox1.Size = new System.Drawing.Size(150, 388);
-            this.textBox1.TabIndex = 0;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(66, 16);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(60, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Calculated:";
+            // 
+            // txtBoxExpected
+            // 
+            this.txtBoxExpected.Location = new System.Drawing.Point(6, 32);
+            this.txtBoxExpected.Multiline = true;
+            this.txtBoxExpected.Name = "txtBoxExpected";
+            this.txtBoxExpected.ReadOnly = true;
+            this.txtBoxExpected.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtBoxExpected.Size = new System.Drawing.Size(57, 389);
+            this.txtBoxExpected.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(4, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(55, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Expected:";
+            // 
+            // txtBoxCalculated
+            // 
+            this.txtBoxCalculated.Location = new System.Drawing.Point(69, 32);
+            this.txtBoxCalculated.Multiline = true;
+            this.txtBoxCalculated.Name = "txtBoxCalculated";
+            this.txtBoxCalculated.ReadOnly = true;
+            this.txtBoxCalculated.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtBoxCalculated.Size = new System.Drawing.Size(150, 389);
+            this.txtBoxCalculated.TabIndex = 0;
             // 
             // bgWorker
             // 
+            this.bgWorker.WorkerReportsProgress = true;
             this.bgWorker.WorkerSupportsCancellation = true;
             this.bgWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgWorker_DoWork);
             // 
@@ -622,7 +671,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(612, 489);
+            this.ClientSize = new System.Drawing.Size(666, 499);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.grpBoxTest);
@@ -702,8 +751,12 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtBoxCalculated;
         private System.ComponentModel.BackgroundWorker bgWorker;
+        private System.Windows.Forms.Button btnResetWeights;
+        private System.Windows.Forms.TextBox txtBoxExpected;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }
 

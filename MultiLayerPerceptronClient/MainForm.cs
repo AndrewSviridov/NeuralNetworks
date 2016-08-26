@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using MultiLayerPerceptronClient.Properties;
+using NeuralNetworks.EventsArgs;
 using NeuralNetworks.Models;
 using NeuralNetworks.Utility;
 
@@ -19,7 +20,7 @@ namespace MultiLayerPerceptronClient
         private TeachButtonState _teachButtonState;
         private string _datafilePath;
         private int _iterations;
-        private int _learningRate;
+        private double _learningRate;
 
         private const char _separator = '\t';
         private const char _decimalPoint = '.';
@@ -148,7 +149,7 @@ namespace MultiLayerPerceptronClient
                 SwitchConfigGrpBoxControls(false);
                 btnCreateBack.Text = Resources.MainForm_btnCreateBack_Click_Back_to_configuration;
 
-                SetStatusStrip(Color.Green, "Network created.");
+                SetStatusStrip(Color.Green, Resources.MainForm_statusStripInfo_Network_created);
                 _createButtonState = CreateButtonState.Back;
             }
             else
@@ -219,7 +220,8 @@ namespace MultiLayerPerceptronClient
                 .Where(numControl => numControl.Maximum != 1)
                 .ToList();
 
-            var firstInput = Convert.ToInt32(numInputs.Value);
+            var biasInput = 1;
+            var firstInput = Convert.ToInt32(numInputs.Value) + biasInput;
 
             inputsPerLayer.Add(firstInput);
             inputsPerLayer.AddRange(numHiddenLayers.Select(numHiddenLayer => Convert.ToInt32(numHiddenLayer.Value)));
@@ -268,9 +270,13 @@ namespace MultiLayerPerceptronClient
 
                 _datafilePath = $"{folderBrowser.SelectedPath}\\{cmbBoxTeachingFiles.SelectedItem}";
                 _iterations = Convert.ToInt32(numIterations.Value);
-                _learningRate = Convert.ToInt32(numLearningRate);
+                _learningRate = Convert.ToDouble(numLearningRate.Value);
+
+                SwitchTeachingGrpBoxControls(false);
 
                 bgWorker.RunWorkerAsync();
+
+                
 
                 btnTeachAbort.Text = Resources.MainForm_btnTeachAbort_Click_Abort_teaching;
                 _teachButtonState = TeachButtonState.Abort;
@@ -282,8 +288,21 @@ namespace MultiLayerPerceptronClient
             }
         }
 
+        private void SwitchTeachingGrpBoxControls(bool enabledState)
+        {
+            btnSelect.Enabled = enabledState;
+            btnRefresh.Enabled = enabledState;
+            btnResetWeights.Enabled = enabledState;
+            cmbBoxTeachingFiles.Enabled = enabledState;
+            numIterations.Enabled = enabledState;
+            numLearningRate.Enabled = enabledState;
+            grpBoxTest.Enabled = enabledState;
+        }
+
         private void bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
+            _mlp.TeachingProgressChanged += OnTeachingProgressChanged;
+
             try
             {
                 _mlp.Teach(_datafilePath, _separator, _decimalPoint, _iterations, _learningRate);
@@ -292,26 +311,90 @@ namespace MultiLayerPerceptronClient
             {
                 statusStrip.Invoke(new Action(() => SetStatusStrip(Color.Red, ex.Message)));
                 SetTeachingButtonInBgWorker();
+                Invoke(new Action(() => SwitchTeachingGrpBoxControls(true)));
                 return;
             }
 
             if (bgWorker.CancellationPending)
             {
-                statusStrip.Invoke(new Action(() => SetStatusStrip(Color.Orange, "Teaching aborted.")));
+                statusStrip.Invoke(new Action(() => SetStatusStrip(Color.Orange, Resources.MainForm_statusStripInfo_Teaching_aborted)));
             }
             else
             {
-                statusStrip.Invoke(new Action(() => SetStatusStrip(Color.Green, "Teaching done.")));
-                grpBoxTest.Invoke(new Action(() => grpBoxTest.Enabled = true));
+                statusStrip.Invoke(new Action(() => SetStatusStrip(Color.Green, Resources.MainForm_statusStripInfo_Teaching_done)));
             }
 
+            Invoke(new Action (() => SwitchTeachingGrpBoxControls(true)));
             SetTeachingButtonInBgWorker();
+            _mlp.TeachingProgressChanged -= OnTeachingProgressChanged;
         }
 
         private void SetTeachingButtonInBgWorker()
         {
             btnTeachAbort.Invoke(new Action(() => btnTeachAbort.Text = Resources.MainForm_btnTeachAbort_Click_Teach));
             _teachButtonState = TeachButtonState.Teach;
+        }
+
+        public void OnTeachingProgressChanged(object sender, ProgressEventArgs e)
+        {
+            progBarTeaching.Invoke(new Action(() => progBarTeaching.Value = e.Progress));
+        }
+
+        private void btnResetWeights_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                _mlp.ResetWeights();
+            }
+            catch (Exception exception)
+            {
+                SetStatusStrip(Color.Red, exception.Message);
+                return;
+            }
+
+            SetStatusStrip(Color.Green, Resources.MainForm_statusStripInfo_Weights_were_reset);
+        }
+
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            ClearResultTextBoxes();
+            SetStatusStrip(Color.LightBlue, "");
+
+            if (cmbBoxTestingFiles.SelectedItem == null)
+            {
+                SetStatusStrip(Color.Red, Resources.MainForm_statusStripInfo_Select_data_file_to_test);
+            }
+
+            _datafilePath = $"{folderBrowser.SelectedPath}\\{cmbBoxTestingFiles.SelectedItem}";
+            List<Tuple<double, double>> results;
+
+            try
+            {
+                results = _mlp.Test(_datafilePath, _separator, _decimalPoint);
+            }
+            catch (Exception exception)
+            {
+                SetStatusStrip(Color.Red, exception.Message);
+                return;
+            }
+
+            SetResultsGroupBox(results);
+            SetStatusStrip(Color.Green, Resources.MainForm_statusStripInfo_Testing_done_check_results);
+        }
+
+        private void SetResultsGroupBox(List<Tuple<double, double>> results)
+        {
+            foreach (var result in results)
+            {
+                txtBoxExpected.Text += result.Item1 + Environment.NewLine;
+                txtBoxCalculated.Text += result.Item2 + Environment.NewLine;
+            }
+        }
+
+        private void ClearResultTextBoxes()
+        {
+            txtBoxExpected.Clear();
+            txtBoxCalculated.Clear();
         }
     }
 }
