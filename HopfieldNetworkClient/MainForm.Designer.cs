@@ -464,7 +464,7 @@
             this.statusStrip.GripMargin = new System.Windows.Forms.Padding(0);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusStripInfo});
-            this.statusStrip.Location = new System.Drawing.Point(0, 306);
+            this.statusStrip.Location = new System.Drawing.Point(0, 316);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(542, 22);
             this.statusStrip.SizingGrip = false;
@@ -480,7 +480,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(542, 328);
+            this.ClientSize = new System.Drawing.Size(542, 338);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBoxTest);
             this.Controls.Add(this.groupBoxTeach);
