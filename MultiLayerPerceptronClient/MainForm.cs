@@ -219,9 +219,8 @@ namespace MultiLayerPerceptronClient
                 enabledNumLayers
                 .Where(numControl => numControl.Maximum != 1)
                 .ToList();
-
-            var biasInput = 1;
-            var firstInput = Convert.ToInt32(numInputs.Value) + biasInput;
+            
+            var firstInput = Convert.ToInt32(numInputs.Value);
 
             inputsPerLayer.Add(firstInput);
             inputsPerLayer.AddRange(numHiddenLayers.Select(numHiddenLayer => Convert.ToInt32(numHiddenLayer.Value)));

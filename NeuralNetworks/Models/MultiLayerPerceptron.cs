@@ -14,7 +14,6 @@ namespace NeuralNetworks.Models
         private readonly List<Layer> _layers;
         private readonly DataReader _dataReader;
         private bool _abortTeaching;
-        private const double _bias = 1.0;
 
         private Delegates.DerivativeFunction _derivativeFunction;
 
@@ -55,11 +54,10 @@ namespace NeuralNetworks.Models
             for (int iteration = 0; iteration < iterations; iteration++)
             {
                 var selectedVector = _randomizer.SelectRandomVector(inputVectors);
-                var selectedVectorWithBias = AddBiasToInputDataVector(selectedVector.Data);
                 var expectedClass = selectedVector.Class;
 
                 outputs.Clear();
-                outputs.Add(selectedVectorWithBias);
+                outputs.Add(selectedVector.Data);
 
                 CalculateOutputs(outputs);
 
@@ -77,13 +75,6 @@ namespace NeuralNetworks.Models
                     return;
                 }
             }
-        }
-
-        private Vector<double> AddBiasToInputDataVector(Vector<double> inputVector)
-        {
-            var list = inputVector.ToList();
-            list.Insert(0, _bias);
-            return Vector<double>.Build.DenseOfEnumerable(list);
         }
 
         private void DoErrorsBackwardPropagation(List<Vector<double>> outputs, double learningRate, int expectedClass)
@@ -208,8 +199,7 @@ namespace NeuralNetworks.Models
 
             foreach (var neuralVector in testingData)
             {
-                var testingInputWithBias = AddBiasToInputDataVector(neuralVector.Data);
-                var testingOutputs = new List<Vector<double>> { testingInputWithBias };
+                var testingOutputs = new List<Vector<double>> { neuralVector.Data };
                 CalculateOutputs(testingOutputs);
                 var expectedOutput = neuralVector.Class;
                 var calculatedOutput = testingOutputs.Last().Last();
