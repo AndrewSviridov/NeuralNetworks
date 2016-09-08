@@ -10,6 +10,8 @@ namespace SelfOrganizingMapClient
 {
     public partial class MainForm : Form
     {
+        private readonly Color _pointsColor = Color.Green;
+        private readonly Color _linesColor = Color.LightSeaGreen;
         private Drawer _drawer;
         private Randomizer _randomizer;
         private Triangle _triangle;
@@ -20,13 +22,12 @@ namespace SelfOrganizingMapClient
         private int _pointsDiameter = 4;
         private int _lineWidth = 1;
 
-        private int _mapRadius;
-        private int _iteration = 1;
-        private int _maxIterations;
-        private double _timeConst;
-        private const double _startLearningRate = 1.0;
 
+        private int _iteration;
         private int _neighborRadius;
+        private int _radiusDecayRate;
+        private double _shiftFactor;
+        private int _shiftFactorDecayRate;
 
         private enum SimulationState
         {
@@ -64,7 +65,7 @@ namespace SelfOrganizingMapClient
                     btnStartPause.Text = Resources.buttonText_Pause;
                     btnGenerate.Enabled = false;
                     btnStop.Enabled = true;
-                    numNeurons.Enabled = false;
+                    grpBoxConfig.Enabled = false;
 
                     timer.Enabled = true;
                     timer.Start();
@@ -96,43 +97,42 @@ namespace SelfOrganizingMapClient
             btnStartPause.Text = Resources.buttonText_Start;
             btnStartPause.Enabled = false;
             btnGenerate.Enabled = true;
-            numNeurons.Enabled = true;
+            grpBoxConfig.Enabled = true;
         }
 
         private void timer_Tick(object sender, EventArgs e)
         {
             var coordRange = new CoordRange(_triangle.Left.X, _triangle.Right.X, _triangle.Up.Y, _triangle.Right.Y);
 
-            if (_iteration <= _maxIterations)
+            if (_neighborRadius > 0)
             {
                 _drawer.ClearArea();
 
                 var point = _randomizer.RandomizePointInTriangle(coordRange, _areaSize);
                 var node = Translator.TranslatePointToNode(point);
 
-                var radius = CalculateRadius();
-                var learningRate = CalculateLearningRate();
-                
-                ChangeNeighborRadius();
-
-                var nodes = _som.ModifyNodes(node, radius, learningRate, _neighborRadius);
+                var nodes = _som.StartModifyNodes(node, _neighborRadius, _shiftFactor);
                 var points = Translator.TranslateNodesToPoints(nodes);
 
                 _drawer.DrawTriangle(_triangle, Color.Black);
-                _drawer.DrawPoints(points, _pointsDiameter, Color.Green, PointType.Filled);
-                _drawer.DrawLines(points, _lineWidth, Color.Blue);
+                _drawer.DrawPoints(points, _pointsDiameter, _pointsColor, PointType.Filled);
+                _drawer.DrawLines(points, _lineWidth, _linesColor);
                 _drawer.DrawPoint(point, _pointsDiameter, Color.Red, PointType.Filled);
+
+                _iteration++;
 
                 RefreshArea();
                 UpdateIterationInfo();
 
-                _iteration++;
+                CalculateRadius();
+                CalculateShiftFactor();
             }
             else
             {
                 btnGenerate.Enabled = true;
                 btnStartPause.Enabled = false;
                 btnStop.Enabled = false;
+                grpBoxConfig.Enabled = true;
                 timer.Stop();
             }
         }
@@ -141,7 +141,6 @@ namespace SelfOrganizingMapClient
         private void InitializeControls()
         {
             _areaSize = picBoxMap.Width;
-            _mapRadius = _areaSize / 2;
 
             ReadControlsValues();
             UpdateIterationInfo();
@@ -156,47 +155,51 @@ namespace SelfOrganizingMapClient
 
         private void ReadControlsValues()
         {
+            _iteration = 0;
             _neuronsCount = Convert.ToInt32(numNeurons.Value);
-            _maxIterations = _neuronsCount * 100;
-            _timeConst = _maxIterations / Math.Log(_mapRadius);
-
-            _neighborRadius = _neuronsCount / 10;
+            _neighborRadius = Convert.ToInt32(numNeighborRadius.Value);
+            _radiusDecayRate = Convert.ToInt32(numRadiusDecay.Value);
+            _shiftFactor = Convert.ToDouble(numShiftFactor.Value);
+            _shiftFactorDecayRate = Convert.ToInt32(numShiftDecayRate.Value);
         }
 
         private void InitializeSom()
         {
-            ReadControlsValues();
             var startedRange = new CoordRange(200, 300, 250, 350);
             var nodes = _randomizer.RandomizeStartedNodesInTriangle(_neuronsCount, startedRange, _areaSize);
             var points = Translator.TranslateNodesToPoints(nodes);
 
-            _drawer.DrawPoints(points, _pointsDiameter, Color.Green, PointType.Filled);
-            _drawer.DrawLines(points, _lineWidth, Color.Blue);
+            _drawer.DrawPoints(points, _pointsDiameter, _pointsColor, PointType.Filled);
+            _drawer.DrawLines(points, _lineWidth, _linesColor);
 
             _som = new SelfOrganizingMap(nodes);
         }
 
-        private double CalculateRadius()
+        private void CalculateRadius()
         {
-            return _mapRadius * Math.Exp(-_iteration / _timeConst);
-        }
-
-        private double CalculateLearningRate()
-        {
-            return _startLearningRate * Math.Exp(-(double)_iteration / _maxIterations);
-        }
-
-        private void ChangeNeighborRadius()
-        {
-            if (_iteration % 1000 == 0)
+            if (_iteration % _radiusDecayRate == 0)
             {
-                _neighborRadius--;
+                if (_neighborRadius != 0)
+                {
+                    _neighborRadius--;
+                }
+            }
+        }
+
+        private void CalculateShiftFactor()
+        {
+            if (_iteration % _shiftFactorDecayRate == 0)
+            {
+                if (_neighborRadius != 0)
+                {
+                    _shiftFactor *= 0.95;
+                }
             }
         }
 
         private void UpdateIterationInfo()
         {
-            lblIterationInfo.Text = $"{_iteration}/{_maxIterations}";
+            lblIterationInfo.Text = $"{_iteration}";
         }
 
         private Triangle InitializeTriangle(int squareSize)
