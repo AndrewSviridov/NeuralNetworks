@@ -48,6 +48,8 @@
             this.numShiftDecayRate = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.grpBoxConfig = new System.Windows.Forms.GroupBox();
+            this.numDrawFreq = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxMap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numNeurons)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numNeighborRadius)).BeginInit();
@@ -55,6 +57,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numShiftFactor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numShiftDecayRate)).BeginInit();
             this.grpBoxConfig.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numDrawFreq)).BeginInit();
             this.SuspendLayout();
             // 
             // picBoxMap
@@ -84,7 +87,7 @@
             // btnStartPause
             // 
             this.btnStartPause.Enabled = false;
-            this.btnStartPause.Location = new System.Drawing.Point(518, 249);
+            this.btnStartPause.Location = new System.Drawing.Point(518, 281);
             this.btnStartPause.Name = "btnStartPause";
             this.btnStartPause.Size = new System.Drawing.Size(99, 27);
             this.btnStartPause.TabIndex = 1;
@@ -131,7 +134,7 @@
             // 
             // btnGenerate
             // 
-            this.btnGenerate.Location = new System.Drawing.Point(518, 216);
+            this.btnGenerate.Location = new System.Drawing.Point(518, 248);
             this.btnGenerate.Name = "btnGenerate";
             this.btnGenerate.Size = new System.Drawing.Size(214, 27);
             this.btnGenerate.TabIndex = 0;
@@ -142,7 +145,7 @@
             // btnStop
             // 
             this.btnStop.Enabled = false;
-            this.btnStop.Location = new System.Drawing.Point(633, 249);
+            this.btnStop.Location = new System.Drawing.Point(633, 281);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(99, 27);
             this.btnStop.TabIndex = 2;
@@ -153,7 +156,7 @@
             // labelIteration
             // 
             this.labelIteration.AutoSize = true;
-            this.labelIteration.Location = new System.Drawing.Point(518, 188);
+            this.labelIteration.Location = new System.Drawing.Point(518, 220);
             this.labelIteration.Name = "labelIteration";
             this.labelIteration.Size = new System.Drawing.Size(48, 13);
             this.labelIteration.TabIndex = 5;
@@ -162,7 +165,7 @@
             // lblIterationInfo
             // 
             this.lblIterationInfo.AutoSize = true;
-            this.lblIterationInfo.Location = new System.Drawing.Point(572, 188);
+            this.lblIterationInfo.Location = new System.Drawing.Point(572, 220);
             this.lblIterationInfo.Name = "lblIterationInfo";
             this.lblIterationInfo.Size = new System.Drawing.Size(13, 13);
             this.lblIterationInfo.TabIndex = 6;
@@ -294,6 +297,8 @@
             // 
             // grpBoxConfig
             // 
+            this.grpBoxConfig.Controls.Add(this.numDrawFreq);
+            this.grpBoxConfig.Controls.Add(this.label5);
             this.grpBoxConfig.Controls.Add(this.labelNeurons);
             this.grpBoxConfig.Controls.Add(this.numShiftDecayRate);
             this.grpBoxConfig.Controls.Add(this.numNeurons);
@@ -306,10 +311,47 @@
             this.grpBoxConfig.Controls.Add(this.numRadiusDecay);
             this.grpBoxConfig.Location = new System.Drawing.Point(518, 12);
             this.grpBoxConfig.Name = "grpBoxConfig";
-            this.grpBoxConfig.Size = new System.Drawing.Size(214, 163);
+            this.grpBoxConfig.Size = new System.Drawing.Size(214, 192);
             this.grpBoxConfig.TabIndex = 15;
             this.grpBoxConfig.TabStop = false;
             this.grpBoxConfig.Text = "SOM configuration";
+            // 
+            // numDrawFreq
+            // 
+            this.numDrawFreq.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numDrawFreq.Location = new System.Drawing.Point(135, 153);
+            this.numDrawFreq.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numDrawFreq.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numDrawFreq.Name = "numDrawFreq";
+            this.numDrawFreq.Size = new System.Drawing.Size(59, 20);
+            this.numDrawFreq.TabIndex = 16;
+            this.numDrawFreq.TabStop = false;
+            this.numDrawFreq.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(15, 155);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(88, 26);
+            this.label5.TabIndex = 15;
+            this.label5.Text = "Draw frequency: \r\n(in iterations)";
             // 
             // MainForm
             // 
@@ -336,6 +378,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numShiftDecayRate)).EndInit();
             this.grpBoxConfig.ResumeLayout(false);
             this.grpBoxConfig.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numDrawFreq)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -362,6 +405,8 @@
         private System.Windows.Forms.NumericUpDown numShiftDecayRate;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox grpBoxConfig;
+        private System.Windows.Forms.NumericUpDown numDrawFreq;
+        private System.Windows.Forms.Label label5;
     }
 }
 

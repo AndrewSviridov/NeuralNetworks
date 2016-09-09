@@ -49,15 +49,25 @@ namespace NeuralNetworks.Models
             return Math.Sqrt(powResult);
         }
 
-        private void MoveAdjacentNodes(Node randomizedPoint, int winnerIndex, double neighborRadius, double shiftFactor)
+        private void MoveAdjacentNodes(Node randomizedPoint, int winnerIndex, int neighborRadius, double shiftFactor)
         {
-            MoveWinnerAndLeftNeighbours(randomizedPoint, winnerIndex, neighborRadius, shiftFactor);
-            MoveRightNeighbours(randomizedPoint, winnerIndex, neighborRadius, shiftFactor);
+            MoveWinner(randomizedPoint, winnerIndex, shiftFactor);
+            if (neighborRadius != 0)
+            {
+                MoveLeftNeighbours(randomizedPoint, winnerIndex, neighborRadius, shiftFactor);
+                MoveRightNeighbours(randomizedPoint, winnerIndex, neighborRadius, shiftFactor);
+            }
         }
 
-        private void MoveWinnerAndLeftNeighbours(Node randomizedPoint, int winnerIndex, double neighborRadius, double shiftFactor)
+        private void MoveWinner(Node randomizedPoint, int winnerIndex, double shiftFactor)
         {
-            for (int index = winnerIndex; index > winnerIndex - neighborRadius; index--)
+            _nodes[winnerIndex].X += (int)((randomizedPoint.X - _nodes[winnerIndex].X) * shiftFactor);
+            _nodes[winnerIndex].Y += (int)((randomizedPoint.Y - _nodes[winnerIndex].Y) * shiftFactor);
+        }
+
+        private void MoveLeftNeighbours(Node randomizedPoint, int winnerIndex, int neighborRadius, double shiftFactor)
+        {
+            for (int index = winnerIndex - 1; index >= winnerIndex - neighborRadius; index--)
             {
                 if (index >= 0)
                 {
@@ -72,7 +82,7 @@ namespace NeuralNetworks.Models
             }
         }
 
-        private void MoveRightNeighbours(Node randomizedPoint, int winnerIndex, double neighborRadius, double shiftFactor)
+        private void MoveRightNeighbours(Node randomizedPoint, int winnerIndex, int neighborRadius, double shiftFactor)
         {
             for (int index = winnerIndex + 1; index <= winnerIndex + neighborRadius; index++)
             {

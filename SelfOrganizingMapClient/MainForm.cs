@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using NeuralNetworks.Models;
@@ -28,6 +30,7 @@ namespace SelfOrganizingMapClient
         private int _radiusDecayRate;
         private double _shiftFactor;
         private int _shiftFactorDecayRate;
+        private int _drawFrequency;
 
         private enum SimulationState
         {
@@ -104,7 +107,7 @@ namespace SelfOrganizingMapClient
         {
             var coordRange = new CoordRange(_triangle.Left.X, _triangle.Right.X, _triangle.Up.Y, _triangle.Right.Y);
 
-            if (_neighborRadius > 0)
+            if (_shiftFactor >= 0.02)
             {
                 _drawer.ClearArea();
 
@@ -114,14 +117,9 @@ namespace SelfOrganizingMapClient
                 var nodes = _som.StartModifyNodes(node, _neighborRadius, _shiftFactor);
                 var points = Translator.TranslateNodesToPoints(nodes);
 
-                _drawer.DrawTriangle(_triangle, Color.Black);
-                _drawer.DrawPoints(points, _pointsDiameter, _pointsColor, PointType.Filled);
-                _drawer.DrawLines(points, _lineWidth, _linesColor);
-                _drawer.DrawPoint(point, _pointsDiameter, Color.Red, PointType.Filled);
+                DrawWithFrequency(points, point);
 
                 _iteration++;
-
-                RefreshArea();
                 UpdateIterationInfo();
 
                 CalculateRadius();
@@ -156,6 +154,7 @@ namespace SelfOrganizingMapClient
         private void ReadControlsValues()
         {
             _iteration = 0;
+            _drawFrequency = Convert.ToInt32(numDrawFreq.Value);
             _neuronsCount = Convert.ToInt32(numNeurons.Value);
             _neighborRadius = Convert.ToInt32(numNeighborRadius.Value);
             _radiusDecayRate = Convert.ToInt32(numRadiusDecay.Value);
@@ -190,10 +189,7 @@ namespace SelfOrganizingMapClient
         {
             if (_iteration % _shiftFactorDecayRate == 0)
             {
-                if (_neighborRadius != 0)
-                {
-                    _shiftFactor *= 0.95;
-                }
+                 _shiftFactor *= 0.95;
             }
         }
 
@@ -212,6 +208,18 @@ namespace SelfOrganizingMapClient
         private void RefreshArea()
         {
             picBoxMap.Refresh();
+        }
+
+        private void DrawWithFrequency(List<Point> points, Point point)
+        {
+            if (_iteration % _drawFrequency == 0)
+            {
+                _drawer.DrawTriangle(_triangle, Color.Black);
+                _drawer.DrawPoints(points, _pointsDiameter, _pointsColor, PointType.Filled);
+                _drawer.DrawLines(points, _lineWidth, _linesColor);
+                _drawer.DrawPoint(point, _pointsDiameter, Color.Red, PointType.Filled);
+                RefreshArea();
+            }
         }
     }
 }
