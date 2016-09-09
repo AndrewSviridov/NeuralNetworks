@@ -216,7 +216,7 @@
             this.numRadiusDecay.TabIndex = 10;
             this.numRadiusDecay.TabStop = false;
             this.numRadiusDecay.Value = new decimal(new int[] {
-            150,
+            300,
             0,
             0,
             0});
@@ -249,7 +249,7 @@
             this.numShiftFactor.TabIndex = 12;
             this.numShiftFactor.TabStop = false;
             this.numShiftFactor.Value = new decimal(new int[] {
-            25,
+            75,
             0,
             0,
             131072});
