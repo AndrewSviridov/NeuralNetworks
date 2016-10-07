@@ -18,7 +18,7 @@ namespace NeuralNetworks.Models
         {
             var nearestNode = FindNearestNode(randomizedPoint);
             var nearestNodeIndex = _nodes.IndexOf(nearestNode);
-            
+
             MoveAdjacentNodes(randomizedPoint, nearestNodeIndex, neighborRadius, shiftFactor);
 
             return _nodes;
