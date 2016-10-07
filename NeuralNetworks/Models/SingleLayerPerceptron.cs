@@ -1,4 +1,11 @@
-﻿using System.Linq;
+﻿#region License
+/*
+ * This file is subject to the terms and conditions defined in
+ * file 'LICENSE.txt', which is part of this source code package.
+ */
+#endregion
+
+using System.Linq;
 using MathNet.Numerics.LinearAlgebra;
 using NeuralNetworks.SingleLayerPerceptronHelpers;
 using NeuralNetworks.Utility;

@@ -1,4 +1,11 @@
-﻿using MathNet.Numerics.LinearAlgebra;
+﻿#region License
+/*
+ * This file is subject to the terms and conditions defined in
+ * file 'LICENSE.txt', which is part of this source code package.
+ */
+#endregion
+
+using MathNet.Numerics.LinearAlgebra;
 
 namespace NeuralNetworks.Utility
 {

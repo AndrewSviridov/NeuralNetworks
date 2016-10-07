@@ -75,6 +75,7 @@
     <Compile Include="UtilitiesTests\DataReaderTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="NeuralNetworks.Tests.licenseheader" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

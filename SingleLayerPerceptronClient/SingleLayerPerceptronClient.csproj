@@ -54,6 +54,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="SingleLayerPerceptronClient.licenseheader" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NeuralNetworks\NeuralNetworks.csproj">

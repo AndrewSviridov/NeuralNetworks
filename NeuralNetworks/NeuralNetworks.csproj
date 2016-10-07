@@ -65,6 +65,7 @@
     <Compile Include="Utility\Randomizer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="NeuralNetworks.licenseheader" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
