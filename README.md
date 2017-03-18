@@ -14,7 +14,7 @@ Artificial neural networks
     ##### Stop
     ![SomStop](Screenshots/SelfOrganizingMapClientStop.png)
 - Multi Layer Perceptron (BPA - Back Propagation Algorithm) --> [Model](../master/NeuralNetworks/Models/MultiLayerPerceptron.cs) --> [App](../master/MultiLayerPerceptronClient/MainForm.cs)
-    ##### Stop
+    ##### Network
     ![MlpNetwork](Screenshots/MultiLayerPerceptronClientNetwork.png)
     ##### Teach
     ![MlpNetwork](Screenshots/MultiLayerPerceptronClientTeach.png)
